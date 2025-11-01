@@ -23,7 +23,7 @@ class EuAiActCrew():
     def ai_regulations_researcher(self) -> Agent:
         return Agent(
             config=self.agents_config['ai_regulations_researcher'], # type: ignore[index]
-            verbose=True
+            verbose=True,
             mcps=[]
         )
 
@@ -31,7 +31,7 @@ class EuAiActCrew():
     def ai_regulations_reporting_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['ai_regulations_reporting_analyst'], # type: ignore[index]
-            verbose=True
+            verbose=True,
             mcps=[]
         )
 
