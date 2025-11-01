@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 """
-Basic MCP Server - Main Entry Point
+EU AI Act Article 50 MCP Server - Main Entry Point
 
-This is the entry point for the MCP server. It imports the server 
-from server.py and runs it using the mcp_run function.
+This is the entry point for the MCP server. It imports and runs the FastMCP server.
 """
-from mcp.server.mcp_run import mcp_run
 
 # Import our MCP server instance
 from server import mcp
 
 if __name__ == "__main__":
-    # Run the MCP server
-    # This will start the server and make all tools available via MCP protocol
-    mcp_run(mcp)
+    # Run the MCP server using FastMCP's built-in run method
+    # This will start the server and make all tools and resources available via MCP protocol
+    mcp.run()

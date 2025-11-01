@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "my-mcp-server": {
+      "command": "python",
+      "args": ["/Users/liana/Documents/AI/sonnylabs/mcp_server_example/mcp/server.py"],
+      "cwd": "/Users/liana/Documents/AI/sonnylabs/mcp_server_example",
+      "env": {
+        "PATH": "/Users/liana/Documents/AI/sonnylabs/mcp_server_example/venv/bin:${PATH}"
+      }
+    },
+    "eu-ai-act-article-50": {
+      "command": "/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP/venv/bin/python",
+      "args": ["/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP/main.py"],
+      "cwd": "/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP",
+      "env": {}
+    }
+  }
+}

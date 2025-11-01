@@ -1,0 +1,51 @@
+{
+  "ai_interaction": {
+    "en": {
+      "simple": "You are chatting with an AI assistant.",
+      "detailed": "You are interacting with an AI-powered system. This system generates responses automatically and may not always be accurate.",
+      "voice": "This is an AI assistant speaking. Responses are generated automatically."
+    },
+    "es": {
+      "simple": "Estás chateando con un asistente de IA.",
+      "detailed": "Estás interactuando con un sistema impulsado por IA.",
+      "voice": "Este es un asistente de IA hablando."
+    },
+    "fr": {
+      "simple": "Vous chattez avec un assistant IA.",
+      "detailed": "Vous interagissez avec un système alimenté par l'IA.",
+      "voice": "Ceci est un assistant IA qui parle."
+    },
+    "de": {
+      "simple": "Sie chatten mit einem KI-Assistenten.",
+      "detailed": "Sie interagieren mit einem KI-gestützten System.",
+      "voice": "Dies ist ein KI-Assistent, der spricht."
+    },
+    "it": {
+      "simple": "Stai chattando con un assistente AI.",
+      "detailed": "Stai interagendo con un sistema alimentato dall'IA.",
+      "voice": "Questo è un assistente AI che parla."
+    }
+  },
+  "emotion_recognition": {
+    "en": {
+      "simple": "This system uses emotion recognition technology.",
+      "detailed": "This system analyzes emotional expressions from your face, voice, or text. Your emotional data is processed according to GDPR regulations.",
+      "privacy_notice": "Your emotional state data is collected and processed. You have the right to access, correct, or delete this data."
+    },
+    "es": {
+      "simple": "Este sistema utiliza tecnología de reconocimiento de emociones.",
+      "detailed": "Este sistema analiza expresiones emocionales de tu rostro, voz o texto.",
+      "privacy_notice": "Se recopilan y procesan datos sobre tu estado emocional."
+    },
+    "fr": {
+      "simple": "Ce système utilise la technologie de reconnaissance des émotions.",
+      "detailed": "Ce système analyse les expressions émotionnelles de votre visage, voix ou texte.",
+      "privacy_notice": "Vos données d'état émotionnel sont collectées et traitées."
+    },
+    "de": {
+      "simple": "Dieses System verwendet Emotionserkennungstechnologie.",
+      "detailed": "Dieses System analysiert emotionale Ausdrücke aus Ihrem Gesicht, Stimme oder Text.",
+      "privacy_notice": "Ihre emotionalen Zustandsdaten werden erfasst und verarbeitet."
+    }
+  }
+}

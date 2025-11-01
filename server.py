@@ -1,12 +1,13 @@
 # server.py
 """
-Basic MCP Server Template
+EU AI Act Article 50 Compliance MCP Server
 
-This is a minimal MCP (Model Context Protocol) server setup that you can use as a template
-for building your own MCP servers with custom tools.
+This MCP server provides tools and resources for EU AI Act Article 50 compliance,
+including transparency obligations for AI systems.
 """
 
 import os
+import json
 from typing import Dict, Any, List
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
@@ -15,84 +16,118 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Create an MCP server with a name
-mcp = FastMCP("BasicMCP")
+mcp = FastMCP("EU_AI_ACT_MCP")
 
 
-# Example Tool 1: Simple text processing
-@mcp.tool()
-def reverse_text(text: str) -> Dict[str, str]:
+# ============================================================================
+# RESOURCES - Data files that agents can read
+# ============================================================================
+
+@mcp.resource("disclosure-templates://ai-interaction-and-emotion")
+def get_disclosure_templates() -> str:
     """
-    Reverses the given text string.
+    Provides pre-written disclosure text templates for EU AI Act Article 50 compliance.
+    
+    Contains:
+    - AI interaction disclosures (Article 50(1))
+    - Emotion recognition disclosures (Article 50(3))
+    
+    Available in multiple languages: en, es, fr, de, it
+    """
+    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
+    with open(template_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+
+# ============================================================================
+# TOOLS - Article 50 Compliance Tools
+# ============================================================================
+
+@mcp.tool()
+def get_ai_interaction_disclosure(language: str = "en", style: str = "simple") -> Dict[str, Any]:
+    """
+    Get AI interaction disclosure text for EU AI Act Article 50(1) compliance.
+    
+    This tool provides pre-written disclosure text that MUST be shown to users
+    when they interact with an AI system (chatbots, voice assistants, etc.).
     
     Args:
-        text: The text to reverse
+        language: Language code (en, es, fr, de, it). Default: "en"
+        style: Disclosure style (simple, detailed, voice). Default: "simple"
         
     Returns:
-        A dictionary with the original and reversed text
-    """
-    return {
-        "original": text,
-        "reversed": text[::-1]
-    }
-
-
-# Example Tool 2: Math operations
-@mcp.tool()
-def calculate(operation: str, a: float, b: float) -> Dict[str, Any]:
-    """
-    Performs basic math operations.
-    
-    Args:
-        operation: The operation to perform (add, subtract, multiply, divide)
-        a: First number
-        b: Second number
+        Dictionary containing the disclosure text and metadata
         
-    Returns:
-        A dictionary with the operation result
+    Example:
+        get_ai_interaction_disclosure(language="en", style="simple")
+        Returns: {"disclosure": "You are chatting with an AI assistant.", ...}
     """
-    operations = {
-        "add": a + b,
-        "subtract": a - b,
-        "multiply": a * b,
-        "divide": a / b if b != 0 else None
-    }
+    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
     
-    if operation not in operations:
+    with open(template_path, 'r', encoding='utf-8') as f:
+        templates = json.load(f)
+    
+    # Get the requested disclosure
+    try:
+        disclosure_text = templates["ai_interaction"][language][style]
+    except KeyError:
         return {
-            "error": f"Unknown operation: {operation}",
-            "valid_operations": list(operations.keys())
+            "error": f"Disclosure not found for language '{language}' and style '{style}'",
+            "available_languages": list(templates["ai_interaction"].keys()),
+            "available_styles": ["simple", "detailed", "voice"]
         }
     
-    result = operations[operation]
-    if result is None:
-        return {"error": "Division by zero"}
-    
     return {
-        "operation": operation,
-        "a": a,
-        "b": b,
-        "result": result
+        "article": "50(1)",
+        "obligation": "AI Interaction Transparency",
+        "language": language,
+        "style": style,
+        "disclosure": disclosure_text,
+        "usage": "Display this text to users before or during AI interaction",
+        "compliance_deadline": "2026-08-02"
     }
 
 
-# Example Tool 3: String manipulation
 @mcp.tool()
-def text_stats(text: str) -> Dict[str, Any]:
+def get_emotion_recognition_disclosure(language: str = "en", style: str = "simple") -> Dict[str, Any]:
     """
-    Returns statistics about the given text.
+    Get emotion recognition disclosure text for EU AI Act Article 50(3) compliance.
+    
+    This tool provides pre-written disclosure text that MUST be shown to users
+    when an AI system uses emotion recognition technology.
     
     Args:
-        text: The text to analyze
+        language: Language code (en, es, fr, de, it). Default: "en"
+        style: Disclosure style (simple, detailed, privacy_notice). Default: "simple"
         
     Returns:
-        A dictionary with text statistics
+        Dictionary containing the disclosure text and metadata
+        
+    Example:
+        get_emotion_recognition_disclosure(language="en", style="detailed")
     """
-    words = text.split()
+    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
+    
+    with open(template_path, 'r', encoding='utf-8') as f:
+        templates = json.load(f)
+    
+    # Get the requested disclosure
+    try:
+        disclosure_text = templates["emotion_recognition"][language][style]
+    except KeyError:
+        return {
+            "error": f"Disclosure not found for language '{language}' and style '{style}'",
+            "available_languages": list(templates["emotion_recognition"].keys()),
+            "available_styles": ["simple", "detailed", "privacy_notice"]
+        }
+    
     return {
-        "character_count": len(text),
-        "word_count": len(words),
-        "line_count": len(text.split('\n')),
-        "uppercase_count": sum(1 for c in text if c.isupper()),
-        "lowercase_count": sum(1 for c in text if c.islower()),
-        "digit_count": sum(1 for c in text if c.isdigit())
+        "article": "50(3)",
+        "obligation": "Emotion Recognition Transparency",
+        "language": language,
+        "style": style,
+        "disclosure": disclosure_text,
+        "usage": "Display this text to users before activating emotion recognition",
+        "gdpr_compliance": "Ensure user consent is obtained",
+        "compliance_deadline": "2026-08-02"
     }
