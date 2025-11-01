@@ -57,6 +57,27 @@ def get_deepfake_labels() -> str:
         return f.read()
 
 
+@mcp.resource("article50-rules://official-text")
+def get_article50_rules() -> str:
+    """
+    Provides the official EU AI Act Article 50 rules and requirements.
+    
+    Contains:
+    - Complete Article 50 obligations (paragraphs 50(1), 50(2), 50(3), 50(4))
+    - Provider obligations (AI interaction, content watermarking)
+    - Deployer obligations (emotion recognition, deepfake labeling)
+    - Exceptions and exemptions
+    - Compliance deadlines
+    - Penalty information
+    - Key definitions
+    
+    Use this resource to understand which obligations apply to your AI system.
+    """
+    rules_path = os.path.join(os.path.dirname(__file__), "article50_rules.json")
+    with open(rules_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+
 # ============================================================================
 # TOOLS - Article 50 Compliance Tools
 # ============================================================================
