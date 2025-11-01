@@ -290,3 +290,80 @@ def label_news_text(
         "compliance_deadline": "2026-08-02",
         "usage": "Publish the labeled_text instead of the original text"
     }
+
+
+@mcp.tool()
+def watermark_text(
+    text_content: str,
+    generator: str = "AI",
+    format_type: str = "plain"
+) -> Dict[str, Any]:
+    """
+    Add metadata watermark to AI-generated text for EU AI Act Article 50(2) compliance.
+    
+    This tool adds machine-readable metadata to AI-generated text content,
+    marking it as artificially generated. This is required for provider compliance
+    with Article 50(2) for text content generation systems.
+    
+    Args:
+        text_content: The AI-generated text to watermark
+        generator: Name of the AI system that generated it (e.g., "GPT-4", "Claude", "Custom AI")
+        format_type: Output format (plain, markdown, html). Default: "plain"
+        
+    Returns:
+        Dictionary containing the watermarked text with embedded metadata
+        
+    Example:
+        watermark_text(
+            text_content="This is AI-generated content...",
+            generator="GPT-4",
+            format_type="markdown"
+        )
+    """
+    import hashlib
+    from datetime import datetime, timezone
+    
+    # Generate content hash for integrity verification
+    content_hash = hashlib.sha256(text_content.encode('utf-8')).hexdigest()[:16]
+    
+    # Create timestamp
+    timestamp = datetime.now(timezone.utc).isoformat()
+    
+    # Create metadata
+    metadata = {
+        "ai_generated": True,
+        "generator": generator,
+        "timestamp": timestamp,
+        "content_hash": content_hash,
+        "compliance": "EU AI Act Article 50(2)",
+        "watermark_version": "1.0"
+    }
+    
+    # Format the watermarked text based on format type
+    if format_type == "html":
+        watermarked_text = f'''<!-- AI-Generated Content Metadata
+{json.dumps(metadata, indent=2)}
+-->
+{text_content}'''
+    elif format_type == "markdown":
+        watermarked_text = f'''<!-- AI Watermark: {json.dumps(metadata)} -->
+
+{text_content}'''
+    else:  # plain text
+        metadata_str = json.dumps(metadata, separators=(',', ':'))
+        watermarked_text = f"[AI-WATERMARK:{metadata_str}]\n\n{text_content}"
+    
+    return {
+        "article": "50(2)",
+        "obligation": "Content Watermarking (Text)",
+        "watermarked_text": watermarked_text,
+        "metadata": metadata,
+        "original_length": len(text_content),
+        "watermarked_length": len(watermarked_text),
+        "format": format_type,
+        "machine_readable": True,
+        "detectable": True,
+        "compliance_deadline": "2026-08-02",
+        "usage": "Use watermarked_text instead of original. Metadata is machine-readable.",
+        "verification": f"Content hash: {content_hash}"
+    }
