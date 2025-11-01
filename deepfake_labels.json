@@ -1,0 +1,54 @@
+{
+  "text": {
+    "en": {
+      "standard": "This content was generated with AI assistance.",
+      "news": "This article was generated with AI assistance. Reviewed by {editor}.",
+      "news_no_editor": "This article was generated with AI. No human editorial oversight."
+    },
+    "es": {
+      "standard": "Este contenido fue generado con asistencia de IA.",
+      "news": "Este artículo fue generado con asistencia de IA. Revisado por {editor}.",
+      "news_no_editor": "Este artículo fue generado con IA. Sin supervisión editorial humana."
+    },
+    "fr": {
+      "standard": "Ce contenu a été généré avec l'aide de l'IA.",
+      "news": "Cet article a été généré avec l'aide de l'IA. Révisé par {editor}.",
+      "news_no_editor": "Cet article a été généré par IA. Sans supervision éditoriale humaine."
+    },
+    "de": {
+      "standard": "Dieser Inhalt wurde mit KI-Unterstützung generiert.",
+      "news": "Dieser Artikel wurde mit KI-Unterstützung generiert. Überprüft von {editor}.",
+      "news_no_editor": "Dieser Artikel wurde mit KI generiert. Keine menschliche redaktionelle Aufsicht."
+    }
+  },
+  "image": {
+    "en": {
+      "standard": "This image has been artificially generated or manipulated.",
+      "artistic": "This work contains AI-generated imagery."
+    },
+    "es": {
+      "standard": "Esta imagen ha sido generada o manipulada artificialmente.",
+      "artistic": "Esta obra contiene imágenes generadas por IA."
+    }
+  },
+  "video": {
+    "en": {
+      "standard": "This video has been artificially generated or manipulated.",
+      "artistic": "This work contains AI-generated content."
+    },
+    "es": {
+      "standard": "Este video ha sido generado o manipulado artificialmente.",
+      "artistic": "Esta obra contiene contenido generado por IA."
+    }
+  },
+  "audio": {
+    "en": {
+      "standard": "This audio has been artificially generated.",
+      "spoken": "Warning: This audio was created using artificial intelligence."
+    },
+    "es": {
+      "standard": "Este audio ha sido generado artificialmente.",
+      "spoken": "Advertencia: Este audio fue creado usando inteligencia artificial."
+    }
+  }
+}
