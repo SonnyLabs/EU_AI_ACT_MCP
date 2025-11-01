@@ -1,7 +1,2 @@
-fastapi>=0.104.1
-pydantic>=2.4.2
-uvicorn>=0.23.2
-git+https://github.com/SonnyLabs/sonnylabs_py
-python-dotenv>=1.0.0
-httpx>=0.27.0
 mcp>=1.0.0
+python-dotenv>=1.0.0

@@ -1,187 +1,137 @@
-# SonnyLabs MCP Server for Prompt Injection Detection
+# Basic MCP Server Template
 
-This MCP (Model Context Protocol) server integrates with the SonnyLabs API to provide prompt injection detection capabilities that can be used with other MCP servers.
+A minimal template for building [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers. Use this as a starting point to create your own MCP servers with custom tools and capabilities.
+
+## What is MCP?
+
+The Model Context Protocol (MCP) is an open standard that enables seamless integration between AI applications and external data sources and tools. MCP servers expose tools that AI assistants can use to perform various tasks.
 
 ## Features
 
-- **Detection API**: Detect prompt injections in text using SonnyLabs AI security API
-- **MCP Security Proxy**: Intercept and scan communications between MCP clients and servers to detect hidden prompt injections
-- **Cross-server protection**: Secure multiple MCP servers accessed through the same client
-- **Configurable detection threshold**: Adjust sensitivity based on your security requirements
-- **Flexible response options**: Block or just log detected injections
-- **Request tagging**: Track related analyses with unique identifiers
+This template includes:
+- ✅ Basic MCP server setup with FastMCP
+- ✅ Three example tools demonstrating different patterns:
+  - **Text reversal** - Simple string manipulation
+  - **Calculator** - Basic math operations with error handling
+  - **Text statistics** - Data analysis and aggregation
+- ✅ Minimal dependencies for easy extension
+- ✅ Environment variable support with `.env` file
+- ✅ Clean, documented code structure
 
-## Setup
+## Quick Start
 
-1. First, install the required dependencies:
+### 1. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Set up your SonnyLabs API credentials:
-
-   - Copy the `.env` file and fill in your API credentials:
-   - Replace `your_api_token_here` with your actual SonnyLabs API token
-   - Replace `your_analysis_id_here` with your actual SonnyLabs Analysis ID
-
-3. Register for SonnyLabs credentials if you don't have them:
-   - Go to https://sonnylabs-service.onrender.com and register
-   - Confirm your email address and login to your new SonnyLabs account
-   - Get a SonnyLabs API token from the API Keys section
-   - Create a new analysis and get the analysis ID from the URL
-
-## Usage
-
-### Running the MCP Server
-
-To start the MCP server:
+### 2. Run the Server
 
 ```bash
-python server.py
+python main.py
 ```
 
-The server will start on `localhost:8000` by default.
+The MCP server will start and be ready to accept connections from MCP clients.
 
-### Using the Prompt Injection Detection Tool
+### 3. Test the Tools
 
-The MCP server provides a tool called `detect_prompt_injection` that analyzes text for potential prompt injection attacks.
+You can test the server using any MCP client. The following tools are available:
 
-Example usage within another MCP application:
+- `reverse_text` - Reverses a text string
+- `calculate` - Performs basic math operations (add, subtract, multiply, divide)
+- `text_stats` - Returns statistics about text (character count, word count, etc.)
+
+## Project Structure
+
+```
+.
+├── server.py           # Main server file with tool definitions
+├── main.py             # Entry point that runs the server
+├── requirements.txt    # Python dependencies
+├── pyproject.toml      # Project metadata and configuration
+├── .env.example        # Example environment variables
+└── README.md          # This file
+```
+
+## Adding Your Own Tools
+
+To add new tools to your MCP server:
+
+1. Open `server.py`
+2. Define a new function with the `@mcp.tool()` decorator:
 
 ```python
-# Assuming you have the MCP client connected to this server
-result = mcp_client.call_tool("detect_prompt_injection", text="Your text to analyze")
-
-# Check the prompt injection score
-injection_score = result["analysis"][0]["result"]
-print(f"Prompt injection score: {injection_score}")
-
-# The result includes a unique tag for tracking related analyses
-tag = result["tag"]
-```
-
-### Parameters
-
-The `detect_prompt_injection` tool accepts the following parameters:
-
-- `text` (required): The text to analyze for prompt injection
-- `threshold` (optional, default: 0.65): Threshold above which to consider prompt injection detected
-- `tag` (optional): A unique identifier for linking related analyses
-
-### Response Format
-
-The tool returns a JSON object with the following structure:
-
-```json
-{
-  "analysis": [
-    {
-      "type": "score",
-      "name": "prompt_injection",
-      "result": 0.99  // Score between 0.0 and 1.0
-    }
-  ],
-  "tag": "unique-request-identifier"
-}
-```
-
-## Example Implementation
-
-Here's an example of how to use this MCP server to check for prompt injections in another MCP application:
-
-```python
-from mcp.client import MCPClient
-
-# Connect to the SonnyLabs MCP server
-sonnylabs_mcp = MCPClient("http://localhost:8000")
-
-def check_for_prompt_injection(user_input):
+@mcp.tool()
+def your_tool_name(param1: str, param2: int) -> Dict[str, Any]:
     """
-    Check if user input contains a prompt injection attempt.
+    Description of what your tool does.
     
     Args:
-        user_input: The text to check
+        param1: Description of first parameter
+        param2: Description of second parameter
         
     Returns:
-        bool: True if prompt injection is detected, False otherwise
+        A dictionary with the tool results
     """
-    try:
-        result = sonnylabs_mcp.call_tool("detect_prompt_injection", text=user_input)
-        score = result["analysis"][0]["result"]
-        
-        # Usually a score above 0.65 indicates a prompt injection attempt
-        if score > 0.65:
-            print(f"Prompt injection detected with score: {score}")
-            return True
-        return False
-    except Exception as e:
-        print(f"Error checking for prompt injection: {e}")
-        # Fail open or closed based on your security requirements
-        return False
+    # Your tool implementation here
+    return {"result": "your_result"}
 ```
 
-## MCP Security Proxy
+3. Restart the server to make the new tool available
 
-The MCP Security Proxy allows you to detect hidden prompt injections in communications between MCP clients and other MCP servers. It works as a middleware that intercepts and analyzes all tool calls before they're sent to the target servers.
+## Adding Resources
 
-### Using the MCP Security Proxy
-
-To use the MCP Security Proxy, simply wrap your existing MCP client:
+MCP servers can also expose resources (data sources). To add resources:
 
 ```python
-from mcp.client import YourMCPClient  # Your actual MCP client import
-from mcp_proxy import secure_mcp_client
-
-# Create your regular MCP client
-client = YourMCPClient("http://some-mcp-server.com")
-
-# Wrap it with the security proxy
-secure_client = secure_mcp_client(
-    client,
-    threshold=0.65,  # Adjust sensitivity as needed
-    block_injections=True,  # Set to False to log but not block
-    callback=lambda text, score, tag: print(f"Injection detected: {text} (score: {score})")
-)
-
-# Use secure_client as you would normally use client
-# All calls will be automatically scanned for prompt injections
-result = secure_client.call_tool("some_tool", text="Your input here")
+@mcp.resource("resource://your-resource-name")
+def get_resource() -> str:
+    """Returns resource data"""
+    return "Your resource content"
 ```
 
-### How It Works
+## Environment Variables
 
-The MCP Security Proxy:
+The template supports environment variables through `.env` files. To use:
 
-1. Intercepts all tool calls made through the MCP client
-2. Extracts all text content from the parameters, including nested parameters
-3. Analyzes the extracted text for potential prompt injections using the SonnyLabs API
-4. Either blocks the request (if `block_injections=True`) or allows it but logs the detection
-5. Forwards clean requests to the target MCP server
+1. Copy `.env.example` to `.env`
+2. Add your variables:
+   ```
+   YOUR_API_KEY=your_key_here
+   YOUR_CONFIG_VALUE=value_here
+   ```
+3. Access in code:
+   ```python
+   import os
+   api_key = os.getenv("YOUR_API_KEY")
+   ```
 
-### Detecting Hidden Prompt Injections
+## Common Use Cases
 
-The proxy can detect various types of prompt injections, including:
+This template can be extended for various use cases:
 
-- **Obvious injections**: Direct attempts like "Ignore previous instructions"
-- **Hidden injections**: Injections disguised within normal-looking content
-- **Nested parameter injections**: Injections hidden within complex parameter structures
+- **API Integrations**: Connect to external APIs and expose them as MCP tools
+- **Database Access**: Query databases and return results
+- **File Operations**: Read, write, and process files
+- **Data Processing**: Transform and analyze data
+- **System Operations**: Execute system commands or scripts
+- **Custom Business Logic**: Implement domain-specific functionality
 
-### Running the Example
+## Next Steps
 
-To try out the MCP Security Proxy:
+1. **Customize the server name**: Change `FastMCP("BasicMCP")` in `server.py` to your desired name
+2. **Remove example tools**: Delete the example tool functions you don't need
+3. **Add your tools**: Implement your custom tools following the examples
+4. **Update metadata**: Modify `pyproject.toml` with your project details
+5. **Add dependencies**: Update `requirements.txt` as you add new functionality
 
-```bash
-python example_proxy_usage.py
-```
+## Resources
 
-This will demonstrate how the proxy detects various types of prompt injections in tool calls.
+- [MCP Documentation](https://modelcontextprotocol.io/)
+- [FastMCP Documentation](https://github.com/jlowin/fastmcp)
+- [MCP Specification](https://spec.modelcontextprotocol.io/)
 
-## Security Considerations
+## License
 
-- Always validate and sanitize user inputs before passing them to LLMs
-- Use the MCP Security Proxy to protect all communications between MCP clients and servers
-- The detection system may produce false positives or false negatives
-- Consider implementing different thresholds for different types of applications
-- Use this tool as part of a defense-in-depth strategy
-- Monitor and log all detected injection attempts
+This template is provided as-is for you to build upon. Customize and use freely for your projects.

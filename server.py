@@ -1,98 +1,98 @@
 # server.py
+"""
+Basic MCP Server Template
+
+This is a minimal MCP (Model Context Protocol) server setup that you can use as a template
+for building your own MCP servers with custom tools.
+"""
+
 import os
-from typing import Optional, Dict, Any
+from typing import Dict, Any, List
 from mcp.server.fastmcp import FastMCP
-from sonnylabs_py import SonnyLabsClient
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables (if needed for future extensions)
 load_dotenv()
 
-# Load SonnyLabs API credentials from environment variables
-API_KEY = os.getenv("SONNYLABS_API_TOKEN")
-ANALYSIS_ID = os.getenv("SONNYLABS_ANALYSIS_ID")
-BASE_URL = os.getenv("SONNYLABS_BASE_URL", "https://sonnylabs-service.onrender.com")
+# Create an MCP server with a name
+mcp = FastMCP("BasicMCP")
 
-# Initialize the SonnyLabs client
-sonnylabs_client = None
-if API_KEY and ANALYSIS_ID:
-    sonnylabs_client = SonnyLabsClient(
-        api_token=API_KEY,
-        analysis_id=ANALYSIS_ID,
-        base_url=BASE_URL
-    )
-else:
-    print("WARNING: SonnyLabs API credentials not configured. Please set the required environment variables.")
 
-# Create an MCP server
-mcp = FastMCP("SonnyLabs")
-
-# Add prompt injection detection tool
+# Example Tool 1: Simple text processing
 @mcp.tool()
-def detect_prompt_injection(text: str, threshold: float = 0.65, tag: Optional[str] = None) -> Dict[str, Any]:
+def reverse_text(text: str) -> Dict[str, str]:
     """
-    Detects if the given text contains a prompt injection attempt.
+    Reverses the given text string.
     
     Args:
-        text: The text to analyze for prompt injection.
-        threshold: Threshold above which to consider a prompt injection detected (default: 0.5).
-        tag: Optional tag to identify this request.
+        text: The text to reverse
         
     Returns:
-        A dictionary containing analysis results and a unique tag.
+        A dictionary with the original and reversed text
     """
-    if not sonnylabs_client:
-        raise ValueError("SonnyLabs API credentials not configured. Please set the required environment variables.")
-    
-    # Analyze the text using SonnyLabs API
-    analysis_result = sonnylabs_client.analyze_text(text, scan_type="input", tag=tag)
-    
-    # Extract prompt injection score
-    injection_score = 0.0
-    for analysis in analysis_result.get("analysis", []):
-        if analysis.get("type") == "score" and analysis.get("name") == "prompt_injection":
-            injection_score = analysis.get("result", 0.0)
-            break
-            
-    # Debug output to see what we're getting from the API
-    print(f"Debug - Full API response: {analysis_result}")
-    print(f"Debug - Extracted injection score: {injection_score}")
-    
     return {
-        "analysis": [
-            {
-                "type": "score",
-                "name": "prompt_injection",
-                "result": injection_score
-            },
-        ],
-        "tag": analysis_result.get("tag")
+        "original": text,
+        "reversed": text[::-1]
     }
 
 
-# Create a FastAPI app for the REST API
-from fastapi import FastAPI, Body
-from pydantic import BaseModel
-from typing import Optional
-
-# Create the FastAPI app
-app = FastAPI(title="SonnyLabs Prompt Injection Detection API")
-
-# Define the request model
-class PromptInjectionRequest(BaseModel):
-    text: str
-    threshold: Optional[float] = 0.5
-    tag: Optional[str] = None
-
-# Add a FastAPI route for direct API access
-@app.post("/detect_prompt_injection")
-async def api_detect_prompt_injection(request: PromptInjectionRequest):
-    return detect_prompt_injection(request.text, request.threshold, request.tag)
-
-# Start the server if this script is run directly
-if __name__ == "__main__":
-    import uvicorn
+# Example Tool 2: Math operations
+@mcp.tool()
+def calculate(operation: str, a: float, b: float) -> Dict[str, Any]:
+    """
+    Performs basic math operations.
     
-    # Run the server
-    print("Starting SonnyLabs API server on http://localhost:8000")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    Args:
+        operation: The operation to perform (add, subtract, multiply, divide)
+        a: First number
+        b: Second number
+        
+    Returns:
+        A dictionary with the operation result
+    """
+    operations = {
+        "add": a + b,
+        "subtract": a - b,
+        "multiply": a * b,
+        "divide": a / b if b != 0 else None
+    }
+    
+    if operation not in operations:
+        return {
+            "error": f"Unknown operation: {operation}",
+            "valid_operations": list(operations.keys())
+        }
+    
+    result = operations[operation]
+    if result is None:
+        return {"error": "Division by zero"}
+    
+    return {
+        "operation": operation,
+        "a": a,
+        "b": b,
+        "result": result
+    }
+
+
+# Example Tool 3: String manipulation
+@mcp.tool()
+def text_stats(text: str) -> Dict[str, Any]:
+    """
+    Returns statistics about the given text.
+    
+    Args:
+        text: The text to analyze
+        
+    Returns:
+        A dictionary with text statistics
+    """
+    words = text.split()
+    return {
+        "character_count": len(text),
+        "word_count": len(words),
+        "line_count": len(text.split('\n')),
+        "uppercase_count": sum(1 for c in text if c.isupper()),
+        "lowercase_count": sum(1 for c in text if c.islower()),
+        "digit_count": sum(1 for c in text if c.isdigit())
+    }
