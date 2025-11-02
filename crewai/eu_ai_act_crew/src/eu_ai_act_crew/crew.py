@@ -40,7 +40,7 @@ class EuAiActCrew():
             config=self.agents_config['ai_regulations_researcher'], # type: ignore[index]
             verbose=True,
             llm=llm,  # Add this to EVERY agent,
-            mcp_servers=["crewai-amp:eu_ai_act_mtp_server"]
+            mcp_servers=["crewai-amp:eu_ai_act_mcp_server"]
         )
 
     @agent
@@ -49,7 +49,7 @@ class EuAiActCrew():
             config=self.agents_config['ai_regulations_reporting_analyst'], # type: ignore[index]
             verbose=True,
             llm=llm,  # Add this to EVERY agent
-            mcp_servers=["crewai-amp:eu_ai_act_mtp_server"]
+            mcp_servers=["crewai-amp:eu_ai_act_mcp_server"]
         )
 
     # To learn more about structured task outputs,

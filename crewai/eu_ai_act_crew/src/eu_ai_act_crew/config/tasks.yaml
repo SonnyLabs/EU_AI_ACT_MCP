@@ -18,4 +18,5 @@ reporting_task:
   expected_output: >
     A fully fledged report with the main topics, each with a full section of information.
     Formatted as markdown without '```'
+    links watermarked and unwatermarked video and audio examples
   agent: ai_regulations_reporting_analyst
