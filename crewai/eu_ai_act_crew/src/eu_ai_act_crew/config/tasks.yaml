@@ -11,6 +11,10 @@ reporting_task:
   description: >
     Review the context you got and expand each topic into a full section for a report.
     Make sure the report is detailed and contains any and all relevant information.
+    Show me all available MCP tools. Then use get_ai_interaction_disclosure to get a detailed English disclosure.
+    Use label_video_deepfake to create a label for an AI-generated video of a speech in German. Not artistic.
+    Use watermark_audio to get watermarking metadata for an AI-generated podcast episode by ElevenLabs in MP3 format.
+    Use label_news_text to label this article: "Breaking news about AI" with human editor "Jane Smith".
   expected_output: >
     A fully fledged report with the main topics, each with a full section of information.
     Formatted as markdown without '```'
