@@ -16,10 +16,13 @@ Prerequisites:
 
 import asyncio
 import json
+import sys, os
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from contextlib import AsyncExitStack
 
+# Add parent directory to path to import server
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 class MCPTester:
     """Simple tester for local MCP servers"""
@@ -219,8 +222,8 @@ async def main():
     
     # Example : Python MCP server
     tester = MCPTester(
-        server_command="C:\\Users\\brian\\src\\EU_AI_ACT_MCP\\.venv\\Scripts\\python.exe",
-        server_args=["C:\\Users\\brian\\src\\EU_AI_ACT_MCP\\main.py"]
+        server_command="python",
+        server_args=["./main.py"]
     )
     
     # ========================================================================

@@ -2,9 +2,24 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+from crewai import LLM
+
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+
+import sys, os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+# Explicitly configure Gemini LLM
+llm = LLM(
+    model="gemini/gemini-2.0-flash-exp",
+    api_key=os.getenv("AIzaSyDliN-q6P4Z6sAy-tyUG14mPRw9TdlSUX")
+)
+
 
 @CrewBase
 class EuAiActCrew():
@@ -24,7 +39,8 @@ class EuAiActCrew():
         return Agent(
             config=self.agents_config['ai_regulations_researcher'], # type: ignore[index]
             verbose=True,
-            mcps=[]
+            llm=llm,  # Add this to EVERY agent,
+            mcp_servers=["crewai-amp:eu_ai_act_mtp_server"]
         )
 
     @agent
@@ -32,7 +48,8 @@ class EuAiActCrew():
         return Agent(
             config=self.agents_config['ai_regulations_reporting_analyst'], # type: ignore[index]
             verbose=True,
-            mcps=[]
+            llm=llm,  # Add this to EVERY agent
+            mcp_servers=["crewai-amp:eu_ai_act_mtp_server"]
         )
 
     # To learn more about structured task outputs,
