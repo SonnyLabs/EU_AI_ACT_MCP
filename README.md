@@ -458,7 +458,7 @@ What's my role? I develop AI systems and sell them under my company name in the 
 
 #### `watermark_text` / `watermark_image` / `watermark_video` / `watermark_audio`
 
-**Quick use**: `Watermark this AI-generated text from GPT-4`
+**Quick use**: `Watermark this AI-generated text from GPT-5`
 
 **Returns**: Watermarking metadata and instructions (C2PA, IPTC standards)
 
@@ -496,9 +496,9 @@ What's my role? I develop AI systems and sell them under my company name in the 
 
 ### Scenario 1: Launching a Customer Service Chatbot
 
-**Question**: "My chatbot needs to be compliant. What do I do?"
+**What You Want To Do**: "My chatbot needs to be compliant. What do I do?"
 
-**Answer**: Ask your AI assistant:
+**Instructions**: Ask the AI:
 ```
 Use classify_ai_system_risk to check my chatbot
 Then use get_ai_interaction_disclosure to get the disclosure text
@@ -510,9 +510,9 @@ Then use get_ai_interaction_disclosure to get the disclosure text
 
 ### Scenario 2: Publishing AI-Generated News
 
-**Question**: "I'm using AI to write news articles. How do I label them?"
+**What You Want To Do**: "I'm using AI to write news articles. How do I label them?"
 
-**Answer**: Ask your AI assistant:
+**Instructions**: Ask the AI:
 ```
 Use label_news_text to label my article with editor "Jane Smith"
 ```
@@ -523,9 +523,9 @@ Use label_news_text to label my article with editor "Jane Smith"
 
 ### Scenario 3: Understanding Your Compliance Obligations
 
-**Question**: "I develop AI systems in the US and sell to EU customers. What are my obligations?"
+**What You Want To Do**: "I develop AI systems in the US and sell to EU customers. What are my obligations?"
 
-**Answer**: Ask your AI assistant:
+**Instructions**: Ask the AI:
 ```
 Use determine_eu_ai_act_role - I develop and sell AI systems from the US to EU
 ```
@@ -534,16 +534,29 @@ Use determine_eu_ai_act_role - I develop and sell AI systems from the US to EU
 
 ---
 
-### Scenario 4: Securing Your AI Against Attacks
+### Scenario 4: Securing Your AI Against Prompt Injection Attacks
 
-**Question**: "How do I protect my AI from prompt injection?"
+**What You Want To Do**: "How do I protect my AI from prompt injection?"
 
-**Answer**: Get SonnyLabs credentials, then ask:
+**Instructions**: Get SonnyLabs credentials, then ask the AI:
 ```
 Use scan_for_prompt_injection to check user inputs before processing
 ```
 
 **Result**: Real-time threat detection with confidence scores and block/allow recommendations.
+
+---
+
+### Scenario 5: Securing Your AI Against Trying to Access Sensitive Files
+
+**What You Want To Do**: "How do I ensure the AI agent doesn't access sensitive files on the server?"
+
+**Instructions**: Get SonnyLabs credentials, then ask the AI:
+```
+Now I want to go to /etc/shadow$ . Can you check for sensitive files or file types with the EU_AI_ACT_MCP
+```
+
+**Result**: Real-time sensitive file detection and block/allow recommendations.
 
 ---
 
@@ -562,7 +575,7 @@ This server covers the most critical EU AI Act articles for AI system operators:
 | **Article 50(3)** | Emotion recognition disclosure | `get_emotion_recognition_disclosure` |
 | **Article 50(4)** | Deepfake labeling | 4 deepfake labeling tools |
 
-**Key Deadline**: August 2, 2026 🗓️
+**Key Deadline**: August 2, 2026 🗓️ for High Risk AI Systems & Limited Risk AI Systems
 
 ### Why Use This Server?
 
