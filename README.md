@@ -12,7 +12,7 @@ This MCP server provides **17 automated compliance tools** that help your AI sys
 - ✅ **Add transparency disclosures** (Article 50 - chatbots, emotion recognition)
 - ✅ **Watermark AI content** (Article 50(2) - text, images, video, audio)
 - ✅ **Label deepfakes** (Article 50(4) - all media types)
-- ✅ **Detect security threats** (Article 15 - prompt injection, PII, file access)
+- ✅ **Detect security threats** (Article 15 - prompt injections)
 
 **Compliance Deadline**: August 2, 2026 🗓️
 
@@ -44,7 +44,6 @@ This MCP server provides **17 automated compliance tools** that help your AI sys
 
 #### **AI Security (3 tools - SonnyLabs.ai Integration)**
 - ✅ `scan_for_prompt_injection` - Detect prompt attacks (Article 15)
-- ✅ `detect_pii_in_content` - Find PII in content (Article 10 + GDPR)
 - ✅ `check_sensitive_file_access` - Monitor file access (Articles 10 & 15)
 
 ### 📚 4 Resources Available
@@ -485,14 +484,6 @@ What's my role? I develop AI systems and sell them under my company name in the 
 
 ---
 
-#### `detect_pii_in_content`
-
-**Purpose**: Find PII (emails, phone numbers, SSNs, etc.) in content
-
-**Returns**: List of PII found, redaction recommendations, GDPR compliance
-
----
-
 #### `check_sensitive_file_access`
 
 **Purpose**: Monitor AI agent file access for security
@@ -565,7 +556,6 @@ This server covers the most critical EU AI Act articles for AI system operators:
 | **Article 3** | Role definitions | `determine_eu_ai_act_role` |
 | **Article 5** | Prohibited practices (€35M penalty) | `check_prohibited_practices` |
 | **Article 6** | High-risk classification | `classify_ai_system_risk` |
-| **Article 10** | Data governance + GDPR | `detect_pii_in_content`, `check_sensitive_file_access` |
 | **Article 15** | Cybersecurity & robustness | `scan_for_prompt_injection`, `check_sensitive_file_access` |
 | **Article 50(1)** | AI interaction disclosure | `get_ai_interaction_disclosure` |
 | **Article 50(2)** | Content watermarking | 4 watermarking tools |
