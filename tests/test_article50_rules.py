@@ -15,7 +15,7 @@ def test_article50_rules():
     print("=" * 60)
     
     # Check if file exists
-    file_path = "article50_rules.json"
+    file_path = os.path.join("resources", "article50_rules.json")
     if not os.path.exists(file_path):
         print(f"✗ ERROR: {file_path} not found!")
         return False

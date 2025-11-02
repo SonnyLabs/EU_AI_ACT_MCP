@@ -4,6 +4,10 @@ Test script for the first resource: disclosure_templates.json
 """
 import json
 import os
+import sys
+
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 def test_disclosure_templates_resource():
     """Test that the disclosure templates resource works"""
@@ -12,7 +16,7 @@ def test_disclosure_templates_resource():
     print("=" * 60)
     
     # Directly test the resource file
-    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
+    template_path = os.path.join(os.path.dirname(__file__), "..", "resources", "disclosure_templates.json")
     
     if not os.path.exists(template_path):
         print(f"❌ File NOT found: {template_path}")

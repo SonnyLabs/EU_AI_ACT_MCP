@@ -15,7 +15,7 @@ def test_watermark_config():
     print("=" * 60)
     
     # Check if file exists
-    file_path = "watermark_config.json"
+    file_path = os.path.join("resources", "watermark_config.json")
     if not os.path.exists(file_path):
         print(f"✗ ERROR: {file_path} not found!")
         return False

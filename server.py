@@ -34,7 +34,7 @@ def get_disclosure_templates() -> str:
     
     Available in multiple languages: en, es, fr, de, it
     """
-    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
+    template_path = os.path.join(os.path.dirname(__file__), "resources", "disclosure_templates.json")
     with open(template_path, 'r', encoding='utf-8') as f:
         return f.read()
 
@@ -52,7 +52,7 @@ def get_deepfake_labels() -> str:
     
     Available in multiple languages: en, es, fr, de
     """
-    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    labels_path = os.path.join(os.path.dirname(__file__), "resources", "deepfake_labels.json")
     with open(labels_path, 'r', encoding='utf-8') as f:
         return f.read()
 
@@ -73,7 +73,7 @@ def get_article50_rules() -> str:
     
     Use this resource to understand which obligations apply to your AI system.
     """
-    rules_path = os.path.join(os.path.dirname(__file__), "article50_rules.json")
+    rules_path = os.path.join(os.path.dirname(__file__), "resources", "article50_rules.json")
     with open(rules_path, 'r', encoding='utf-8') as f:
         return f.read()
 
@@ -94,7 +94,7 @@ def get_watermark_config() -> str:
     Use this resource to understand how to properly watermark AI-generated content
     with machine-readable, detectable metadata that complies with Article 50(2).
     """
-    config_path = os.path.join(os.path.dirname(__file__), "watermark_config.json")
+    config_path = os.path.join(os.path.dirname(__file__), "resources", "watermark_config.json")
     with open(config_path, 'r', encoding='utf-8') as f:
         return f.read()
 
@@ -122,7 +122,7 @@ def get_ai_interaction_disclosure(language: str = "en", style: str = "simple") -
         get_ai_interaction_disclosure(language="en", style="simple")
         Returns: {"disclosure": "You are chatting with an AI assistant.", ...}
     """
-    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
+    template_path = os.path.join(os.path.dirname(__file__), "resources", "disclosure_templates.json")
     
     with open(template_path, 'r', encoding='utf-8') as f:
         templates = json.load(f)
@@ -166,7 +166,7 @@ def get_emotion_recognition_disclosure(language: str = "en", style: str = "simpl
     Example:
         get_emotion_recognition_disclosure(language="en", style="detailed")
     """
-    template_path = os.path.join(os.path.dirname(__file__), "disclosure_templates.json")
+    template_path = os.path.join(os.path.dirname(__file__), "resources", "disclosure_templates.json")
     
     with open(template_path, 'r', encoding='utf-8') as f:
         templates = json.load(f)
@@ -211,7 +211,7 @@ def get_deepfake_label_templates(language: str = "en") -> Dict[str, Any]:
         get_deepfake_label_templates(language="en")
         Returns all labels for English
     """
-    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    labels_path = os.path.join(os.path.dirname(__file__), "resources", "deepfake_labels.json")
     
     with open(labels_path, 'r', encoding='utf-8') as f:
         all_labels = json.load(f)
@@ -269,7 +269,7 @@ def label_news_text(
             language="en"
         )
     """
-    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    labels_path = os.path.join(os.path.dirname(__file__), "resources", "deepfake_labels.json")
     
     with open(labels_path, 'r', encoding='utf-8') as f:
         labels = json.load(f)
@@ -420,7 +420,7 @@ def label_image_deepfake(
             language="en"
         )
     """
-    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    labels_path = os.path.join(os.path.dirname(__file__), "resources", "deepfake_labels.json")
     
     with open(labels_path, 'r', encoding='utf-8') as f:
         labels = json.load(f)
@@ -505,7 +505,7 @@ def label_video_deepfake(
             language="en"
         )
     """
-    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    labels_path = os.path.join(os.path.dirname(__file__), "resources", "deepfake_labels.json")
     
     with open(labels_path, 'r', encoding='utf-8') as f:
         labels = json.load(f)
@@ -590,7 +590,7 @@ def label_audio_deepfake(
             language="en"
         )
     """
-    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    labels_path = os.path.join(os.path.dirname(__file__), "resources", "deepfake_labels.json")
     
     with open(labels_path, 'r', encoding='utf-8') as f:
         labels = json.load(f)
