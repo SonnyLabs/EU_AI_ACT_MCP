@@ -18,13 +18,16 @@ from server import (
     label_audio_deepfake,
     watermark_image,
     watermark_video,
-    watermark_audio
+    watermark_audio,
+    classify_ai_system_risk,
+    check_prohibited_practices,
+    determine_eu_ai_act_role
 )
 
 def test_all_tools():
-    """Test all 10 tools"""
+    """Test all 14 tools"""
     print("=" * 70)
-    print("EU AI ACT ARTICLE 50 COMPLIANCE - COMPLETE TOOL TEST")
+    print("EU AI ACT COMPLIANCE - COMPLETE TOOL TEST")
     print("=" * 70)
     
     tools_tested = []
@@ -120,6 +123,37 @@ def test_all_tools():
     assert result['article'] == "50(2)"
     tools_tested.append("✓ watermark_audio")
     
+    # Test 12: Classify AI System Risk (Articles 5, 6, 50)
+    print("12. Testing classify_ai_system_risk...")
+    result = classify_ai_system_risk(
+        system_description="AI chatbot",
+        use_case="chatbot",
+        interacts_with_users=True
+    )
+    assert 'risk_level' in result
+    tools_tested.append("✓ classify_ai_system_risk")
+    
+    # Test 13: Check Prohibited Practices (Article 5)
+    print("13. Testing check_prohibited_practices...")
+    result = check_prohibited_practices(
+        social_scoring=False,
+        detects_emotions_in_workplace=False
+    )
+    assert 'is_prohibited' in result
+    tools_tested.append("✓ check_prohibited_practices")
+    
+    # Test 14: Determine EU AI Act Role (Article 3)
+    print("14. Testing determine_eu_ai_act_role...")
+    result = determine_eu_ai_act_role(
+        company_description="AI software company",
+        company_location="United States",
+        develops_ai_system=True,
+        uses_ai_system=True
+    )
+    assert 'primary_role' in result
+    assert 'role_details' in result
+    tools_tested.append("✓ determine_eu_ai_act_role")
+    
     # Summary
     print("\n" + "=" * 70)
     print("RESULTS SUMMARY")
@@ -129,12 +163,33 @@ def test_all_tools():
         print(f"  {tool}")
     
     print("\n" + "=" * 70)
-    print("Article 50 Coverage:")
+    print("EU AI Act Coverage:")
     print("=" * 70)
-    print("  ✓ 50(1) - AI Interaction Disclosure")
-    print("  ✓ 50(2) - Content Watermarking (text, image, video, audio)")
-    print("  ✓ 50(3) - Emotion Recognition Disclosure")
-    print("  ✓ 50(4) - Deepfake Labeling (text, image, video, audio)")
+    print("  ✓ Article 3 - Role Definitions (determine_eu_ai_act_role)")
+    print("  ✓ Article 5 - Prohibited AI Practices (check_prohibited_practices)")
+    print("  ✓ Article 6 - High-Risk AI Systems (classify_ai_system_risk)")
+    print("  ✓ Article 50(1) - AI Interaction Disclosure")
+    print("  ✓ Article 50(2) - Content Watermarking (text, image, video, audio)")
+    print("  ✓ Article 50(3) - Emotion Recognition Disclosure")
+    print("  ✓ Article 50(4) - Deepfake Labeling (text, image, video, audio)")
+    
+    print("\n" + "=" * 70)
+    print("Risk Classification:")
+    print("=" * 70)
+    print("  ✓ PROHIBITED (Article 5)")
+    print("  ✓ HIGH-RISK (Article 6 + Annex III)")
+    print("  ✓ LIMITED-RISK (Article 50)")
+    print("  ✓ MINIMAL-RISK (voluntary)")
+    
+    print("\n" + "=" * 70)
+    print("Role Determination:")
+    print("=" * 70)
+    print("  ✓ PROVIDER (Article 3(3))")
+    print("  ✓ DEPLOYER (Article 3(4))")
+    print("  ✓ IMPORTER (Article 3(5))")
+    print("  ✓ DISTRIBUTOR (Article 3(6))")
+    print("  ✓ AUTHORIZED REPRESENTATIVE (Article 3(7))")
+    print("  ✓ PRODUCT MANUFACTURER (Article 3(8))")
     
     print("\n" + "=" * 70)
     print("✅ ALL TOOLS WORKING! MCP SERVER IS COMPLETE!")

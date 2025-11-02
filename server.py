@@ -869,3 +869,597 @@ def watermark_audio(
         ],
         "usage": "Use provided metadata to watermark the audio file"
     }
+
+
+# ============================================================================
+# RISK CLASSIFICATION TOOLS - Articles 5, 6, and Annex III
+# ============================================================================
+
+@mcp.tool()
+def classify_ai_system_risk(
+    system_description: str,
+    use_case: str,
+    biometric_data: bool = False,
+    critical_infrastructure: bool = False,
+    education: bool = False,
+    law_enforcement: bool = False,
+    predicts_criminal_behavior: bool = False,
+    social_scoring: bool = False,
+    emotion_detection_workplace: bool = False,
+    generates_content: bool = False,
+    interacts_with_users: bool = False
+) -> Dict[str, Any]:
+    """
+    Determine AI system risk level per EU AI Act classification framework.
+    
+    Classifies system as: PROHIBITED, HIGH-RISK, LIMITED-RISK, or MINIMAL-RISK
+    based on Articles 5, 6, and 50.
+    
+    Args:
+        system_description: Description of the AI system
+        use_case: Primary use case (e.g., "employment", "healthcare", "chatbot")
+        biometric_data: Uses biometric identification/categorization
+        critical_infrastructure: Used in critical infrastructure
+        education: Used in education/vocational training
+        law_enforcement: Used for law enforcement
+        predicts_criminal_behavior: Predicts criminal behavior from profiling
+        social_scoring: Performs social scoring
+        emotion_detection_workplace: Detects emotions in workplace/education
+        generates_content: Generates synthetic content
+        interacts_with_users: Interacts with natural persons
+        
+    Returns:
+        Risk classification with applicable obligations and deadlines
+    """
+    
+    # Step 1: Check Article 5 - PROHIBITED practices
+    if social_scoring:
+        return {
+            "risk_level": "PROHIBITED",
+            "article": "Article 5(1)(c)",
+            "reason": "Social scoring by public authorities or on their behalf",
+            "system_description": system_description,
+            "compliance_action": "MUST NOT deploy - System is prohibited",
+            "penalties": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "deadline": "Immediate - Already in effect",
+            "recommendation": "Discontinue development or deployment immediately"
+        }
+    
+    if emotion_detection_workplace:
+        return {
+            "risk_level": "PROHIBITED",
+            "article": "Article 5(1)(f)",
+            "reason": "Emotion recognition in workplace or education (except medical/safety)",
+            "system_description": system_description,
+            "compliance_action": "MUST NOT deploy - System is prohibited",
+            "exception": "Allowed only for medical or safety reasons",
+            "penalties": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "deadline": "Immediate - Already in effect",
+            "recommendation": "Remove emotion detection or limit to medical/safety contexts"
+        }
+    
+    if predicts_criminal_behavior:
+        return {
+            "risk_level": "PROHIBITED",
+            "article": "Article 5(1)(d)",
+            "reason": "Risk assessment predicting criminal offenses based on profiling",
+            "system_description": system_description,
+            "compliance_action": "MUST NOT deploy - System is prohibited",
+            "penalties": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "deadline": "Immediate - Already in effect",
+            "recommendation": "Discontinue predictive profiling features"
+        }
+    
+    # Step 2: Check Article 6 + Annex III - HIGH-RISK systems
+    high_risk_checks = []
+    
+    if biometric_data:
+        high_risk_checks.append({
+            "reason": "Biometric identification or categorization",
+            "annex_point": "Annex III point 1",
+            "article_ref": "Article 6(2)"
+        })
+    
+    if use_case.lower() in ["employment", "hiring", "hr", "recruitment"]:
+        high_risk_checks.append({
+            "reason": "AI system for employment, recruitment, or HR decisions",
+            "annex_point": "Annex III point 4(a)",
+            "article_ref": "Article 6(2)"
+        })
+    
+    if education:
+        high_risk_checks.append({
+            "reason": "AI system for education or vocational training",
+            "annex_point": "Annex III point 3",
+            "article_ref": "Article 6(2)"
+        })
+    
+    if law_enforcement:
+        high_risk_checks.append({
+            "reason": "AI system for law enforcement",
+            "annex_point": "Annex III point 6",
+            "article_ref": "Article 6(2)"
+        })
+    
+    if critical_infrastructure:
+        high_risk_checks.append({
+            "reason": "AI system for critical infrastructure",
+            "annex_point": "Annex III point 2",
+            "article_ref": "Article 6(2)"
+        })
+    
+    if high_risk_checks:
+        return {
+            "risk_level": "HIGH-RISK",
+            "article": high_risk_checks[0]["article_ref"],
+            "annex_reference": high_risk_checks[0]["annex_point"],
+            "reason": high_risk_checks[0]["reason"],
+            "system_description": system_description,
+            "all_high_risk_factors": [check["reason"] for check in high_risk_checks],
+            "applicable_obligations": [
+                "Risk management system (Article 9)",
+                "Data governance and management (Article 10)",
+                "Technical documentation (Article 11)",
+                "Record-keeping/logging (Article 12)",
+                "Transparency and information to users (Article 13)",
+                "Human oversight (Article 14)",
+                "Accuracy, robustness, cybersecurity (Article 15)",
+                "Quality management system (Article 17)",
+                "Conformity assessment (Article 43)",
+                "Registration in EU database (Article 49)",
+                "Post-market monitoring (Article 72)"
+            ],
+            "compliance_deadline": "2027-08-02",
+            "penalties_if_non_compliant": "Up to €15 million or 3% of global annual turnover",
+            "next_steps": [
+                "Conduct conformity assessment",
+                "Implement risk management system",
+                "Create technical documentation",
+                "Establish human oversight mechanisms",
+                "Register in EU database before deployment"
+            ]
+        }
+    
+    # Step 3: Check Article 50 - LIMITED-RISK systems
+    limited_risk_checks = []
+    
+    if interacts_with_users:
+        limited_risk_checks.append({
+            "reason": "AI system interacts with natural persons",
+            "article": "Article 50(1)",
+            "obligation": "Must disclose AI interaction to users"
+        })
+    
+    if generates_content:
+        limited_risk_checks.append({
+            "reason": "Generates synthetic audio, image, video, or text content",
+            "article": "Article 50(2)",
+            "obligation": "Must watermark AI-generated content"
+        })
+    
+    if limited_risk_checks:
+        return {
+            "risk_level": "LIMITED-RISK",
+            "article": "Article 50",
+            "reason": "; ".join([check["reason"] for check in limited_risk_checks]),
+            "system_description": system_description,
+            "applicable_obligations": [check["obligation"] for check in limited_risk_checks],
+            "compliance_deadline": "2026-08-02",
+            "penalties_if_non_compliant": "Up to €15 million or 3% of global annual turnover",
+            "next_steps": [
+                "Implement transparency disclosures (Article 50)",
+                "Add watermarks if generating content (Article 50(2))",
+                "Ensure users know they're interacting with AI (Article 50(1))"
+            ]
+        }
+    
+    # Step 4: Default - MINIMAL-RISK
+    return {
+        "risk_level": "MINIMAL-RISK",
+        "article": "No specific article applies",
+        "reason": "System does not fall under prohibited, high-risk, or limited-risk categories",
+        "system_description": system_description,
+        "applicable_obligations": [
+            "Voluntary codes of conduct (Article 95)",
+            "General transparency best practices"
+        ],
+        "compliance_deadline": "No mandatory deadline",
+        "penalties_if_non_compliant": "None (voluntary compliance)",
+        "next_steps": [
+            "Consider voluntary transparency measures",
+            "Follow industry best practices",
+            "Monitor for regulatory updates"
+        ]
+    }
+
+
+@mcp.tool()
+def check_prohibited_practices(
+    uses_subliminal_techniques: bool = False,
+    exploits_vulnerabilities: bool = False,
+    social_scoring: bool = False,
+    predicts_crime_from_profiling: bool = False,
+    scrapes_facial_images: bool = False,
+    detects_emotions_in_workplace: bool = False,
+    biometric_categorization_sensitive_attributes: bool = False,
+    real_time_biometric_identification_public: bool = False
+) -> Dict[str, Any]:
+    """
+    Check if AI system violates prohibited practices under Article 5.
+    
+    These practices carry the HIGHEST penalties: €35M or 7% of global revenue.
+    
+    Args:
+        uses_subliminal_techniques: Manipulates behavior via subliminal techniques
+        exploits_vulnerabilities: Exploits vulnerabilities of specific groups
+        social_scoring: Social scoring by/for public authorities
+        predicts_crime_from_profiling: Predicts criminal behavior from profiling
+        scrapes_facial_images: Scrapes facial images from internet/CCTV
+        detects_emotions_in_workplace: Emotion recognition in workplace/education
+        biometric_categorization_sensitive_attributes: Infers race, politics, etc. from biometrics
+        real_time_biometric_identification_public: Real-time biometric ID in public spaces
+        
+    Returns:
+        Violations found with penalties and recommendations
+    """
+    
+    violations = []
+    
+    if uses_subliminal_techniques:
+        violations.append({
+            "article": "Article 5(1)(a)",
+            "violation": "Subliminal techniques to manipulate behavior",
+            "description": "AI systems that deploy subliminal techniques beyond a person's consciousness to materially distort behavior",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "None"
+        })
+    
+    if exploits_vulnerabilities:
+        violations.append({
+            "article": "Article 5(1)(b)",
+            "violation": "Exploitation of vulnerabilities",
+            "description": "AI systems that exploit vulnerabilities of specific groups (age, disability, social/economic situation)",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "None"
+        })
+    
+    if social_scoring:
+        violations.append({
+            "article": "Article 5(1)(c)",
+            "violation": "Social scoring",
+            "description": "AI systems for social scoring by public authorities or on their behalf",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "None"
+        })
+    
+    if predicts_crime_from_profiling:
+        violations.append({
+            "article": "Article 5(1)(d)",
+            "violation": "Predictive policing based on profiling",
+            "description": "AI systems that make risk assessments of natural persons to predict criminal offenses based solely on profiling",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "None"
+        })
+    
+    if scrapes_facial_images:
+        violations.append({
+            "article": "Article 5(1)(e)",
+            "violation": "Untargeted scraping of facial images",
+            "description": "Creating or expanding facial recognition databases through untargeted scraping from internet or CCTV",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "None"
+        })
+    
+    if detects_emotions_in_workplace:
+        violations.append({
+            "article": "Article 5(1)(f)",
+            "violation": "Emotion recognition in workplace or education",
+            "description": "AI systems that infer emotions in workplace or educational institutions",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "Medical or safety reasons only"
+        })
+    
+    if biometric_categorization_sensitive_attributes:
+        violations.append({
+            "article": "Article 5(1)(g)",
+            "violation": "Biometric categorization of sensitive attributes",
+            "description": "Biometric categorization systems that infer race, political opinions, trade union membership, religious/philosophical beliefs, sex life, or sexual orientation",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "Limited exceptions for law enforcement with safeguards"
+        })
+    
+    if real_time_biometric_identification_public:
+        violations.append({
+            "article": "Article 5(1)(h)",
+            "violation": "Real-time remote biometric identification in public",
+            "description": "Real-time remote biometric identification systems in publicly accessible spaces for law enforcement",
+            "penalty": "Up to €35 million or 7% of global annual turnover (whichever is higher)",
+            "exception": "Very limited exceptions for serious crimes with judicial authorization"
+        })
+    
+    if violations:
+        return {
+            "is_prohibited": True,
+            "severity": "CRITICAL - Highest penalty tier",
+            "violations": violations,
+            "violation_count": len(violations),
+            "total_penalty_exposure": "Up to €35 million or 7% of global annual turnover PER violation",
+            "recommendation": "STOP IMMEDIATELY - These AI practices are PROHIBITED under EU AI Act",
+            "required_actions": [
+                "Cease development and deployment immediately",
+                "Notify relevant supervisory authorities",
+                "Assess alternatives that comply with EU AI Act",
+                "Consult legal counsel for remediation strategy"
+            ],
+            "compliance_status": "NON-COMPLIANT - Critical violation"
+        }
+    
+    return {
+        "is_prohibited": False,
+        "severity": "None",
+        "violations": [],
+        "violation_count": 0,
+        "recommendation": "No prohibited practices detected",
+        "compliance_status": "COMPLIANT with Article 5 prohibitions",
+        "next_steps": [
+            "Continue to check high-risk and limited-risk classifications",
+            "Monitor for regulatory updates",
+            "Maintain compliance documentation"
+        ]
+    }
+
+
+@mcp.tool()
+def determine_eu_ai_act_role(
+    company_description: str,
+    company_location: str,
+    develops_ai_system: bool = False,
+    uses_ai_system: bool = False,
+    sells_ai_system: bool = False,
+    imports_to_eu: bool = False,
+    distributes_in_eu: bool = False,
+    integrates_ai_into_product: bool = False,
+    represents_non_eu_provider: bool = False,
+    under_own_name_or_trademark: bool = False,
+    substantial_modification: bool = False,
+    change_intended_purpose: bool = False
+) -> Dict[str, Any]:
+    """
+    Determine which EU AI Act role(s) apply to your organization.
+    
+    Different roles have different obligations under the EU AI Act.
+    Understanding your role is CRITICAL to knowing which requirements apply.
+    
+    Args:
+        company_description: Brief description of your company/organization
+        company_location: Country/region where company is based
+        develops_ai_system: You develop AI systems or commission their development
+        uses_ai_system: You use AI systems in your operations
+        sells_ai_system: You sell or offer AI systems
+        imports_to_eu: You bring AI systems from outside EU into EU market
+        distributes_in_eu: You distribute/resell AI systems in EU
+        integrates_ai_into_product: You integrate AI into physical products
+        represents_non_eu_provider: You represent a non-EU AI provider in the EU
+        under_own_name_or_trademark: AI system bears your name/trademark
+        substantial_modification: You substantially modify existing AI systems
+        change_intended_purpose: You change the intended purpose of AI systems
+        
+    Returns:
+        Role determination with definitions and applicable obligations
+    """
+    
+    roles_identified = []
+    role_details = {}
+    is_in_eu = company_location.lower() in ["eu", "european union"] or any(
+        country in company_location.lower() 
+        for country in ["germany", "france", "spain", "italy", "netherlands", 
+                       "belgium", "austria", "ireland", "portugal", "greece"]
+    )
+    
+    # Step 1: Check if PROVIDER
+    is_provider = (
+        develops_ai_system or
+        (sells_ai_system and under_own_name_or_trademark) or
+        substantial_modification or
+        change_intended_purpose
+    )
+    
+    if is_provider:
+        reason_parts = []
+        if develops_ai_system:
+            reason_parts.append("develops AI systems")
+        if sells_ai_system and under_own_name_or_trademark:
+            reason_parts.append("places AI on market under own name/trademark")
+        if substantial_modification:
+            reason_parts.append("substantially modifies AI systems")
+        if change_intended_purpose:
+            reason_parts.append("changes intended purpose of AI systems")
+        
+        roles_identified.append("PROVIDER")
+        role_details["provider"] = {
+            "article": "Article 3(3)",
+            "definition": "Develops the AI system or has it developed, and places it on the market or puts it into service under own name or trademark",
+            "applies_to_you": True,
+            "reason": f"You {' and '.join(reason_parts)}",
+            "key_obligations": [
+                "Establish risk management system (Article 9)",
+                "Data governance and quality (Article 10)",
+                "Technical documentation (Article 11)",
+                "Automatic logging (Article 12)",
+                "Design for human oversight (Article 14)",
+                "Accuracy and robustness (Article 15)",
+                "Cybersecurity measures (Article 15)",
+                "Quality management system (Article 17)",
+                "Conformity assessment (Article 43)",
+                "CE marking (Article 48)",
+                "EU database registration (Article 49)"
+            ],
+            "deadline": "2027-08-02 (for high-risk systems)",
+            "penalties": "Up to €15M or 3% of global turnover for non-compliance"
+        }
+    
+    # Step 2: Check if DEPLOYER
+    is_deployer = uses_ai_system
+    
+    if is_deployer:
+        roles_identified.append("DEPLOYER")
+        role_details["deployer"] = {
+            "article": "Article 3(4)",
+            "definition": "Uses an AI system under their authority, except for personal non-professional activity",
+            "applies_to_you": True,
+            "reason": "You use AI systems in your operations",
+            "key_obligations": [
+                "Use AI according to instructions (Article 26(1))",
+                "Ensure human oversight (Article 26(2))",
+                "Monitor AI system operation (Article 26(3))",
+                "Report serious incidents (Article 26(4))",
+                "Keep logs generated by AI system (Article 26(5))",
+                "Conduct fundamental rights impact assessment (Article 27)",
+                "Inform workers about AI monitoring systems (Article 26(7))",
+                "Ensure input data quality (Article 26(6))"
+            ],
+            "deadline": "2027-08-02 (for high-risk systems)",
+            "penalties": "Up to €15M or 3% of global turnover for non-compliance"
+        }
+    
+    # Step 3: Check if IMPORTER
+    is_importer = (
+        not is_in_eu and
+        imports_to_eu and
+        (sells_ai_system or distributes_in_eu) and
+        under_own_name_or_trademark
+    )
+    
+    if is_importer:
+        roles_identified.append("IMPORTER")
+        role_details["importer"] = {
+            "article": "Article 3(5)",
+            "definition": "Places on the market an AI system that bears the name or trademark of a person established outside the EU",
+            "applies_to_you": True,
+            "reason": f"You are based in {company_location} and import AI systems to EU market",
+            "key_obligations": [
+                "Verify provider's conformity assessment (Article 23(1))",
+                "Verify CE marking and documentation (Article 23(2))",
+                "Ensure registration in EU database (Article 23(3))",
+                "Keep copy of technical documentation (Article 23(4))",
+                "Provide authorities with documentation (Article 23(5))",
+                "Ensure storage/transport doesn't affect compliance (Article 23(6))",
+                "Appoint authorized representative in EU (Article 22)"
+            ],
+            "deadline": "2027-08-02",
+            "penalties": "Up to €15M or 3% of global turnover for non-compliance"
+        }
+    
+    # Step 4: Check if DISTRIBUTOR
+    is_distributor = (
+        distributes_in_eu and
+        not is_provider and
+        not is_importer and
+        sells_ai_system
+    )
+    
+    if is_distributor:
+        roles_identified.append("DISTRIBUTOR")
+        role_details["distributor"] = {
+            "article": "Article 3(6)",
+            "definition": "Makes an AI system available on the market without being the provider or importer",
+            "applies_to_you": True,
+            "reason": "You distribute AI systems in the EU market",
+            "key_obligations": [
+                "Verify CE marking present (Article 24(1))",
+                "Verify required documentation provided (Article 24(2))",
+                "Verify provider/importer obligations met (Article 24(3))",
+                "Inform provider/importer of non-compliance (Article 24(4))",
+                "Cooperate with authorities (Article 24(5))"
+            ],
+            "deadline": "2027-08-02",
+            "penalties": "Up to €15M or 3% of global turnover for non-compliance"
+        }
+    
+    # Step 5: Check if AUTHORIZED REPRESENTATIVE
+    is_authorized_rep = (
+        is_in_eu and
+        represents_non_eu_provider
+    )
+    
+    if is_authorized_rep:
+        roles_identified.append("AUTHORIZED REPRESENTATIVE")
+        role_details["authorized_representative"] = {
+            "article": "Article 3(7)",
+            "definition": "Natural or legal person located in the EU who has received a written mandate from a provider outside the EU",
+            "applies_to_you": True,
+            "reason": f"You are based in {company_location} (EU) and represent a non-EU AI provider",
+            "key_obligations": [
+                "Perform tasks specified in mandate (Article 22(1))",
+                "Provide copy of technical documentation to authorities (Article 22(2))",
+                "Cooperate with authorities (Article 22(3))",
+                "Terminate mandate if provider non-compliant (Article 22(4))"
+            ],
+            "deadline": "2027-08-02",
+            "penalties": "Provider's penalties may apply"
+        }
+    
+    # Step 6: Check if PRODUCT MANUFACTURER
+    is_product_manufacturer = (
+        integrates_ai_into_product and
+        under_own_name_or_trademark
+    )
+    
+    if is_product_manufacturer:
+        roles_identified.append("PRODUCT MANUFACTURER")
+        role_details["product_manufacturer"] = {
+            "article": "Article 3(8) + Article 25",
+            "definition": "Manufactures a product and integrates an AI system into it, where the AI is a safety component or the product itself",
+            "applies_to_you": True,
+            "reason": "You integrate AI systems into physical products under your name/trademark",
+            "key_obligations": [
+                "Assume provider obligations for AI component (Article 25(1))",
+                "Ensure AI system complies with requirements (Article 25(2))",
+                "Affix own name/trademark to product (Article 25(3))",
+                "Follow relevant product safety legislation",
+                "Conduct conformity assessment for AI component"
+            ],
+            "deadline": "2027-08-02",
+            "penalties": "Provider penalties apply (up to €15M or 3% of turnover)"
+        }
+    
+    # Determine primary role
+    if not roles_identified:
+        return {
+            "primary_role": "NO DIRECT ROLE",
+            "additional_roles": [],
+            "role_details": {},
+            "company_description": company_description,
+            "company_location": company_location,
+            "assessment": "Based on provided information, you may not have direct EU AI Act obligations",
+            "recommendation": "If you interact with AI systems in any way, review the questions again. You may be a deployer if you use AI systems.",
+            "next_steps": [
+                "Verify you are not using AI systems in your operations",
+                "If you are using AI, you are likely a DEPLOYER",
+                "Monitor for regulatory changes that may affect your activities"
+            ]
+        }
+    
+    primary_role = roles_identified[0]
+    additional_roles = roles_identified[1:] if len(roles_identified) > 1 else []
+    
+    return {
+        "primary_role": primary_role,
+        "additional_roles": additional_roles,
+        "all_roles": roles_identified,
+        "role_details": role_details,
+        "company_description": company_description,
+        "company_location": company_location,
+        "is_eu_based": is_in_eu,
+        "total_roles": len(roles_identified),
+        "critical_note": "If you have multiple roles, you must comply with ALL obligations for each role",
+        "most_common_combination": "Many companies are both PROVIDER (they develop) and DEPLOYER (they use their own AI)",
+        "recommendation": f"Focus first on {primary_role} obligations, then address {', '.join(additional_roles) if additional_roles else 'other compliance areas'}",
+        "next_steps": [
+            f"Review all {primary_role} obligations in detail",
+            "Determine which AI systems are high-risk vs limited-risk",
+            "Create compliance timeline based on deadlines",
+            "Assign responsibility for each obligation",
+            "Consider consulting legal counsel for complex cases"
+        ]
+    }
