@@ -29,6 +29,14 @@
     "es": {
       "standard": "Esta imagen ha sido generada o manipulada artificialmente.",
       "artistic": "Esta obra contiene imágenes generadas por IA."
+    },
+    "fr": {
+      "standard": "Cette image a été générée ou manipulée artificiellement.",
+      "artistic": "Cette œuvre contient des images générées par IA."
+    },
+    "de": {
+      "standard": "Dieses Bild wurde künstlich erstellt oder manipuliert.",
+      "artistic": "Dieses Werk enthält KI-generierte Bilder."
     }
   },
   "video": {
@@ -39,6 +47,14 @@
     "es": {
       "standard": "Este video ha sido generado o manipulado artificialmente.",
       "artistic": "Esta obra contiene contenido generado por IA."
+    },
+    "fr": {
+      "standard": "Cette vidéo a été générée ou manipulée artificiellement.",
+      "artistic": "Cette œuvre contient du contenu généré par IA."
+    },
+    "de": {
+      "standard": "Dieses Video wurde künstlich erstellt oder manipuliert.",
+      "artistic": "Dieses Werk enthält KI-generierte Inhalte."
     }
   },
   "audio": {
@@ -49,6 +65,14 @@
     "es": {
       "standard": "Este audio ha sido generado artificialmente.",
       "spoken": "Advertencia: Este audio fue creado usando inteligencia artificial."
+    },
+    "fr": {
+      "standard": "Cet audio a été généré artificiellement.",
+      "spoken": "Attention : Cet audio a été créé à l'aide de l'intelligence artificielle."
+    },
+    "de": {
+      "standard": "Dieses Audio wurde künstlich erstellt.",
+      "spoken": "Warnung: Dieses Audio wurde mit künstlicher Intelligenz erstellt."
     }
   }
 }

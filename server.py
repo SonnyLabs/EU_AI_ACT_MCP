@@ -78,6 +78,27 @@ def get_article50_rules() -> str:
         return f.read()
 
 
+@mcp.resource("watermark-config://technical-standards")
+def get_watermark_config() -> str:
+    """
+    Provides watermarking configuration and technical standards for Article 50(2).
+    
+    Contains:
+    - C2PA 2.1 specifications (Coalition for Content Provenance and Authenticity)
+    - IPTC metadata standards
+    - Content type configurations (image, video, audio, text)
+    - Embedding settings and parameters
+    - Verification methods
+    - Implementation guide
+    
+    Use this resource to understand how to properly watermark AI-generated content
+    with machine-readable, detectable metadata that complies with Article 50(2).
+    """
+    config_path = os.path.join(os.path.dirname(__file__), "watermark_config.json")
+    with open(config_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+
 # ============================================================================
 # TOOLS - Article 50 Compliance Tools
 # ============================================================================
@@ -366,4 +387,485 @@ def watermark_text(
         "compliance_deadline": "2026-08-02",
         "usage": "Use watermarked_text instead of original. Metadata is machine-readable.",
         "verification": f"Content hash: {content_hash}"
+    }
+
+
+@mcp.tool()
+def label_image_deepfake(
+    image_description: str,
+    is_artistic_work: bool = False,
+    is_satirical: bool = False,
+    language: str = "en"
+) -> Dict[str, Any]:
+    """
+    Generate deepfake label for AI-generated or manipulated images per Article 50(4).
+    
+    This tool provides the appropriate disclosure text and guidance for labeling
+    images that have been artificially generated or manipulated. The label must
+    be prominent, clear, and distinguishable.
+    
+    Args:
+        image_description: Brief description of the image for context
+        is_artistic_work: Whether this is artistic/creative work (may qualify for exemption)
+        is_satirical: Whether this is parody/satire (may qualify for exemption)
+        language: Language code (en, es, fr, de). Default: "en"
+        
+    Returns:
+        Dictionary with label text, placement guidance, and compliance info
+        
+    Example:
+        label_image_deepfake(
+            image_description="AI-generated portrait of a person",
+            is_artistic_work=False,
+            language="en"
+        )
+    """
+    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    
+    with open(labels_path, 'r', encoding='utf-8') as f:
+        labels = json.load(f)
+    
+    # Get the appropriate label based on artistic status
+    try:
+        if is_artistic_work or is_satirical:
+            label_text = labels["image"][language]["artistic"]
+            exemption_applies = True
+            exemption_reason = "Artistic work or satire - modified disclosure"
+        else:
+            label_text = labels["image"][language]["standard"]
+            exemption_applies = False
+            exemption_reason = "Standard disclosure required"
+    except KeyError:
+        return {
+            "error": f"Labels not found for language '{language}'",
+            "available_languages": list(labels.get("image", {}).keys())
+        }
+    
+    # Generate placement guidance
+    placement_options = [
+        "Top-left corner overlay",
+        "Bottom banner overlay",
+        "Visible watermark across image",
+        "Caption below image"
+    ]
+    
+    return {
+        "article": "50(4)",
+        "obligation": "Deepfake Labeling (Image)",
+        "applies_to": "deployer",
+        "image_description": image_description,
+        "label_text": label_text,
+        "language": language,
+        "placement_options": placement_options,
+        "recommended_placement": "Top-left corner overlay with semi-transparent background",
+        "visibility_requirement": "Prominent and clearly distinguishable",
+        "label_persistence": "Must not be easily removable",
+        "is_artistic_work": is_artistic_work,
+        "is_satirical": is_satirical,
+        "exemption_applies": exemption_applies,
+        "exemption_reason": exemption_reason,
+        "compliance_deadline": "2026-08-02",
+        "implementation_notes": [
+            "Label must be visible without zooming or special tools",
+            "Text size must be legible (minimum 12pt or 5% of image height)",
+            "Background contrast must ensure readability",
+            "Label should persist in downloaded/shared versions"
+        ],
+        "usage": "Add this label text to the image using one of the placement options"
+    }
+
+
+@mcp.tool()
+def label_video_deepfake(
+    video_description: str,
+    is_artistic_work: bool = False,
+    is_satirical: bool = False,
+    language: str = "en"
+) -> Dict[str, Any]:
+    """
+    Generate deepfake label for AI-generated or manipulated videos per Article 50(4).
+    
+    This tool provides the appropriate disclosure text and guidance for labeling
+    videos that have been artificially generated or manipulated. The label must
+    be prominent, clear, and distinguishable throughout the video.
+    
+    Args:
+        video_description: Brief description of the video for context
+        is_artistic_work: Whether this is artistic/creative work (may qualify for exemption)
+        is_satirical: Whether this is parody/satire (may qualify for exemption)
+        language: Language code (en, es, fr, de). Default: "en"
+        
+    Returns:
+        Dictionary with label text, placement guidance, and compliance info
+        
+    Example:
+        label_video_deepfake(
+            video_description="AI-generated video of a speech",
+            is_artistic_work=False,
+            language="en"
+        )
+    """
+    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    
+    with open(labels_path, 'r', encoding='utf-8') as f:
+        labels = json.load(f)
+    
+    # Get the appropriate label based on artistic status
+    try:
+        if is_artistic_work or is_satirical:
+            label_text = labels["video"][language]["artistic"]
+            exemption_applies = True
+            exemption_reason = "Artistic work or satire - modified disclosure"
+        else:
+            label_text = labels["video"][language]["standard"]
+            exemption_applies = False
+            exemption_reason = "Standard disclosure required"
+    except KeyError:
+        return {
+            "error": f"Labels not found for language '{language}'",
+            "available_languages": list(labels.get("video", {}).keys())
+        }
+    
+    # Generate placement guidance for video
+    placement_options = [
+        "Persistent overlay in corner throughout video",
+        "Opening title card (3-5 seconds)",
+        "Closing credit with disclosure",
+        "Intermittent overlay every 30 seconds"
+    ]
+    
+    return {
+        "article": "50(4)",
+        "obligation": "Deepfake Labeling (Video)",
+        "applies_to": "deployer",
+        "video_description": video_description,
+        "label_text": label_text,
+        "language": language,
+        "placement_options": placement_options,
+        "recommended_placement": "Persistent semi-transparent overlay in top-left corner",
+        "visibility_requirement": "Clearly visible and distinguishable throughout playback",
+        "label_persistence": "Must persist in all playback formats and cannot be easily removed",
+        "timing_guidance": "If using title card, display for minimum 3 seconds at start",
+        "is_artistic_work": is_artistic_work,
+        "is_satirical": is_satirical,
+        "exemption_applies": exemption_applies,
+        "exemption_reason": exemption_reason,
+        "compliance_deadline": "2026-08-02",
+        "implementation_notes": [
+            "Label must be visible at standard playback resolution",
+            "Text size must be legible (minimum 5% of frame height)",
+            "Use high contrast background for readability",
+            "Label must persist through video editing and re-encoding",
+            "Consider accessibility: include spoken disclosure for audio description"
+        ],
+        "usage": "Add this label to the video using one of the placement options"
+    }
+
+
+@mcp.tool()
+def label_audio_deepfake(
+    audio_description: str,
+    is_artistic_work: bool = False,
+    language: str = "en"
+) -> Dict[str, Any]:
+    """
+    Generate deepfake label for AI-generated or manipulated audio per Article 50(4).
+    
+    This tool provides disclosure text for audio content that has been artificially
+    generated or manipulated. For audio, disclosure can be spoken, written in
+    accompanying materials, or both.
+    
+    Args:
+        audio_description: Brief description of the audio for context
+        is_artistic_work: Whether this is artistic/creative work (may qualify for exemption)
+        language: Language code (en, es, fr, de). Default: "en"
+        
+    Returns:
+        Dictionary with label text (written and spoken), placement guidance, and compliance info
+        
+    Example:
+        label_audio_deepfake(
+            audio_description="AI-generated voice recording",
+            is_artistic_work=False,
+            language="en"
+        )
+    """
+    labels_path = os.path.join(os.path.dirname(__file__), "deepfake_labels.json")
+    
+    with open(labels_path, 'r', encoding='utf-8') as f:
+        labels = json.load(f)
+    
+    # Get labels for audio
+    try:
+        written_label = labels["audio"][language]["standard"]
+        spoken_label = labels["audio"][language]["spoken"]
+        
+        exemption_applies = is_artistic_work
+        exemption_reason = "Artistic work - modified disclosure may apply" if is_artistic_work else "Standard disclosure required"
+    except KeyError:
+        return {
+            "error": f"Labels not found for language '{language}'",
+            "available_languages": list(labels.get("audio", {}).keys())
+        }
+    
+    # Disclosure methods for audio
+    disclosure_methods = [
+        "Spoken announcement at beginning of audio",
+        "Written disclosure in audio player interface",
+        "Metadata embedded in audio file",
+        "Text description accompanying audio"
+    ]
+    
+    return {
+        "article": "50(4)",
+        "obligation": "Deepfake Labeling (Audio)",
+        "applies_to": "deployer",
+        "audio_description": audio_description,
+        "written_label": written_label,
+        "spoken_label": spoken_label,
+        "language": language,
+        "disclosure_methods": disclosure_methods,
+        "recommended_method": "Spoken announcement at beginning + written metadata",
+        "spoken_disclosure_timing": "Beginning of audio (first 3 seconds)",
+        "is_artistic_work": is_artistic_work,
+        "exemption_applies": exemption_applies,
+        "exemption_reason": exemption_reason,
+        "compliance_deadline": "2026-08-02",
+        "implementation_notes": [
+            "Spoken disclosure should be clear and at normal speech volume",
+            "Written disclosure must accompany audio in player/platform",
+            "Embed disclosure in audio file metadata (ID3 tags, etc.)",
+            "Consider accessibility: provide written version for deaf users",
+            "Disclosure should be in same language as primary audio content"
+        ],
+        "usage": "Add spoken disclosure at audio start and include written label in metadata/description"
+    }
+
+
+@mcp.tool()
+def watermark_image(
+    image_description: str,
+    generator: str = "AI",
+    format_type: str = "png"
+) -> Dict[str, Any]:
+    """
+    Generate watermarking metadata for AI-generated images per Article 50(2).
+    
+    This tool provides C2PA-compliant metadata and instructions for watermarking
+    AI-generated images. The watermark must be machine-readable and detectable.
+    
+    Args:
+        image_description: Brief description of the image
+        generator: Name of AI system that generated it (e.g., "DALL-E", "Midjourney")
+        format_type: Image format (png, jpg, webp). Default: "png"
+        
+    Returns:
+        Dictionary with watermarking metadata, instructions, and compliance info
+        
+    Example:
+        watermark_image(
+            image_description="AI-generated landscape",
+            generator="DALL-E",
+            format_type="png"
+        )
+    """
+    from datetime import datetime, timezone
+    import hashlib
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    content_hash = hashlib.sha256(image_description.encode()).hexdigest()[:16]
+    
+    # C2PA metadata structure
+    c2pa_metadata = {
+        "claim_generator": "EU AI Act Compliance MCP Server",
+        "claim_timestamp": timestamp,
+        "assertions": {
+            "c2pa.actions": "ai_generated",
+            "stds.schema-org.CreativeWork": {
+                "creator": generator,
+                "dateCreated": timestamp,
+                "description": image_description,
+                "ai_generated": True
+            }
+        },
+        "signature": "ES256",
+        "hash_algorithm": "SHA-256",
+        "content_hash": content_hash
+    }
+    
+    # IPTC metadata
+    iptc_metadata = {
+        "Digital Source Type": "trainedAlgorithmicMedia",
+        "Credit": f"Generated by {generator}",
+        "Creator": generator,
+        "Date Created": timestamp,
+        "Copyright Notice": "AI-generated content subject to EU AI Act Article 50(2)"
+    }
+    
+    return {
+        "article": "50(2)",
+        "obligation": "Content Watermarking (Image)",
+        "applies_to": "provider",
+        "image_description": image_description,
+        "generator": generator,
+        "format": format_type,
+        "c2pa_metadata": c2pa_metadata,
+        "iptc_metadata": iptc_metadata,
+        "watermark_standard": "C2PA 2.1",
+        "machine_readable": True,
+        "detectable": True,
+        "compliance_deadline": "2026-08-02",
+        "implementation_instructions": [
+            f"1. Use C2PA library to embed metadata in {format_type} file",
+            "2. Add IPTC metadata as fallback",
+            "3. Ensure watermark survives compression and resizing",
+            "4. Verify watermark using C2PA verification tools",
+            "5. Store watermarked version separately from original"
+        ],
+        "verification_url": "https://verify.contentauthenticity.org/",
+        "usage": "Use provided metadata to watermark the image file using C2PA-compliant tools"
+    }
+
+
+@mcp.tool()
+def watermark_video(
+    video_description: str,
+    generator: str = "AI",
+    format_type: str = "mp4"
+) -> Dict[str, Any]:
+    """
+    Generate watermarking metadata for AI-generated videos per Article 50(2).
+    
+    This tool provides C2PA-compliant metadata and instructions for watermarking
+    AI-generated videos. The watermark must be machine-readable and detectable.
+    
+    Args:
+        video_description: Brief description of the video
+        generator: Name of AI system that generated it
+        format_type: Video format (mp4, webm, mov). Default: "mp4"
+        
+    Returns:
+        Dictionary with watermarking metadata, instructions, and compliance info
+    """
+    from datetime import datetime, timezone
+    import hashlib
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    content_hash = hashlib.sha256(video_description.encode()).hexdigest()[:16]
+    
+    c2pa_metadata = {
+        "claim_generator": "EU AI Act Compliance MCP Server",
+        "claim_timestamp": timestamp,
+        "assertions": {
+            "c2pa.actions": "ai_generated",
+            "stds.schema-org.VideoObject": {
+                "creator": generator,
+                "dateCreated": timestamp,
+                "description": video_description,
+                "ai_generated": True
+            }
+        },
+        "signature": "ES256",
+        "hash_algorithm": "SHA-256",
+        "content_hash": content_hash
+    }
+    
+    return {
+        "article": "50(2)",
+        "obligation": "Content Watermarking (Video)",
+        "applies_to": "provider",
+        "video_description": video_description,
+        "generator": generator,
+        "format": format_type,
+        "c2pa_metadata": c2pa_metadata,
+        "watermark_standard": "C2PA 2.1",
+        "watermark_method": "Frame-level embedding",
+        "machine_readable": True,
+        "detectable": True,
+        "compliance_deadline": "2026-08-02",
+        "implementation_instructions": [
+            f"1. Use C2PA video library to embed metadata in {format_type} file",
+            "2. Apply watermark at frame level for persistence",
+            "3. Embed metadata in video container and frames",
+            "4. Ensure watermark survives re-encoding",
+            "5. Test with multiple video players"
+        ],
+        "verification_url": "https://verify.contentauthenticity.org/",
+        "usage": "Use provided metadata to watermark the video file using C2PA-compliant tools"
+    }
+
+
+@mcp.tool()
+def watermark_audio(
+    audio_description: str,
+    generator: str = "AI",
+    format_type: str = "mp3"
+) -> Dict[str, Any]:
+    """
+    Generate watermarking metadata for AI-generated audio per Article 50(2).
+    
+    This tool provides metadata and instructions for watermarking AI-generated audio.
+    Audio watermarks use fingerprinting and metadata embedding.
+    
+    Args:
+        audio_description: Brief description of the audio
+        generator: Name of AI system that generated it
+        format_type: Audio format (mp3, wav, opus). Default: "mp3"
+        
+    Returns:
+        Dictionary with watermarking metadata, instructions, and compliance info
+    """
+    from datetime import datetime, timezone
+    import hashlib
+    
+    timestamp = datetime.now(timezone.utc).isoformat()
+    content_hash = hashlib.sha256(audio_description.encode()).hexdigest()[:16]
+    
+    c2pa_metadata = {
+        "claim_generator": "EU AI Act Compliance MCP Server",
+        "claim_timestamp": timestamp,
+        "assertions": {
+            "c2pa.actions": "ai_generated",
+            "stds.schema-org.AudioObject": {
+                "creator": generator,
+                "dateCreated": timestamp,
+                "description": audio_description,
+                "ai_generated": True
+            }
+        },
+        "content_hash": content_hash
+    }
+    
+    # Audio-specific metadata
+    audio_metadata = {
+        "ID3_tags": {
+            "TIT2": audio_description,
+            "TPE1": generator,
+            "COMM": "AI-generated audio - EU AI Act Article 50(2)",
+            "TDRC": timestamp
+        }
+    }
+    
+    return {
+        "article": "50(2)",
+        "obligation": "Content Watermarking (Audio)",
+        "applies_to": "provider",
+        "audio_description": audio_description,
+        "generator": generator,
+        "format": format_type,
+        "c2pa_metadata": c2pa_metadata,
+        "audio_metadata": audio_metadata,
+        "watermark_method": "Spectral embedding + ID3 tags",
+        "machine_readable": True,
+        "detectable": True,
+        "inaudible": True,
+        "compliance_deadline": "2026-08-02",
+        "implementation_instructions": [
+            f"1. Embed C2PA metadata in {format_type} file",
+            "2. Add ID3 tags for MP3 or equivalent for other formats",
+            "3. Apply inaudible spectral watermark (18-20kHz range)",
+            "4. Ensure watermark survives format conversion",
+            "5. Test detectability after compression"
+        ],
+        "usage": "Use provided metadata to watermark the audio file"
     }
