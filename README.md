@@ -1,47 +1,58 @@
-# EU AI Act Article 50 Compliance MCP Server
+# EU AI Act Compliance MCP Server 🇪🇺
 
-An [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server that provides **automated EU AI Act Article 50 compliance** for AI systems. This server helps AI agents and applications meet transparency obligations for AI-generated content, AI interactions, and deepfake/synthetic media.
+A comprehensive [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server providing **complete EU AI Act compliance tools** for AI systems. This server helps AI applications meet transparency, security, and governance requirements across the entire EU AI Act framework.
 
-## What is This Server?
+## 🎯 What Does This Server Do?
 
-This MCP server implements **EU AI Act Article 50** transparency obligations as **automated tools** that AI agents can call to ensure compliance. Instead of manually adding disclosures and labels, AI systems can use these tools to automatically:
+This MCP server provides **17 automated compliance tools** that help your AI systems:
 
-- ✅ Add chatbot interaction disclosures (Article 50(1))
-- ✅ Add emotion recognition disclosures (Article 50(3))
-- ✅ Label AI-generated news and text content (Article 50(4))
-- ✅ Access pre-written disclosure templates in 24+ languages
-- ✅ Get deepfake/synthetic content labels for all media types
+- ✅ **Classify AI systems** by risk level (Prohibited, High-Risk, Limited-Risk, Minimal-Risk)
+- ✅ **Determine your role** under EU AI Act (Provider, Deployer, Importer, etc.)
+- ✅ **Check for prohibited practices** (Article 5 violations)
+- ✅ **Add transparency disclosures** (Article 50 - chatbots, emotion recognition)
+- ✅ **Watermark AI content** (Article 50(2) - text, images, video, audio)
+- ✅ **Label deepfakes** (Article 50(4) - all media types)
+- ✅ **Detect security threats** (Article 15 - prompt injection, PII, file access)
 
-**Compliance Deadline**: August 2, 2026
+**Compliance Deadline**: August 2, 2026 🗓️
 
-## Features
+## 📦 What's Included
 
-### 🔧 Tools (4 Implemented, 6 More Planned)
+### 🔧 17 Tools Available
 
-**Currently Available:**
-- ✅ **get_ai_interaction_disclosure** - Get chatbot/AI interaction disclosure text (Article 50(1))
-- ✅ **get_emotion_recognition_disclosure** - Get emotion recognition system disclosure (Article 50(3))
-- ✅ **get_deepfake_label_templates** - Access all deepfake and AI content labels (Article 50(2)/50(4))
-- ✅ **label_news_text** - Label AI-generated news articles and text (Article 50(4))
+#### **Risk & Role Classification (3 tools)**
+- ✅ `classify_ai_system_risk` - Determine risk level (Articles 5, 6, 50)
+- ✅ `check_prohibited_practices` - Check Article 5 violations
+- ✅ `determine_eu_ai_act_role` - Identify your role (Article 3)
 
-**Coming Soon:**
-- ⏳ **watermark_text** - Add metadata to AI-generated text (Article 50(2))
-- ⏳ **watermark_image** - Add C2PA watermarks to images (Article 50(2))
-- ⏳ **watermark_video** - Add C2PA watermarks to videos (Article 50(2))
-- ⏳ **watermark_audio** - Add audio fingerprints (Article 50(2))
-- ⏳ **label_image_deepfake** - Label AI-generated images (Article 50(4))
-- ⏳ **label_video_deepfake** - Label AI-generated videos (Article 50(4))
-- ⏳ **label_audio_deepfake** - Label AI-generated audio (Article 50(4))
+#### **Transparency & Disclosure (4 tools)**
+- ✅ `get_ai_interaction_disclosure` - Chatbot disclosures (Article 50(1))
+- ✅ `get_emotion_recognition_disclosure` - Emotion AI disclosures (Article 50(3))
+- ✅ `get_deepfake_label_templates` - Access all label templates
+- ✅ `label_news_text` - Label AI-generated news (Article 50(4))
 
-### 📚 Resources (2 Implemented, 2 More Planned)
+#### **Content Watermarking (4 tools)**
+- ✅ `watermark_text` - Watermark AI text (Article 50(2))
+- ✅ `watermark_image` - Watermark AI images with C2PA (Article 50(2))
+- ✅ `watermark_video` - Watermark AI videos with C2PA (Article 50(2))
+- ✅ `watermark_audio` - Watermark AI audio (Article 50(2))
 
-**Currently Available:**
-- ✅ **disclosure-templates://ai-interaction-and-emotion** - Pre-written disclosure text (AI interaction & emotion recognition)
-- ✅ **deepfake-labels://content-labeling** - Pre-written labels for deepfakes and AI content
+#### **Deepfake Labeling (3 tools)**
+- ✅ `label_image_deepfake` - Label AI-generated images (Article 50(4))
+- ✅ `label_video_deepfake` - Label AI-generated videos (Article 50(4))
+- ✅ `label_audio_deepfake` - Label AI-generated audio (Article 50(4))
 
-**Coming Soon:**
-- ⏳ **watermark-config://c2pa-iptc** - C2PA and IPTC watermarking configuration
-- ⏳ **article50-rules://compliance** - Official Article 50 text and compliance rules
+#### **AI Security (3 tools - SonnyLabs.ai Integration)**
+- ✅ `scan_for_prompt_injection` - Detect prompt attacks (Article 15)
+- ✅ `detect_pii_in_content` - Find PII in content (Article 10 + GDPR)
+- ✅ `check_sensitive_file_access` - Monitor file access (Articles 10 & 15)
+
+### 📚 4 Resources Available
+
+- ✅ `disclosure-templates://ai-interaction-and-emotion` - Pre-written disclosures
+- ✅ `deepfake-labels://content-labeling` - All deepfake labels
+- ✅ `article50-rules://official-text` - Official Article 50 rules
+- ✅ `watermark-config://technical-standards` - C2PA & IPTC standards
 
 ### 🌍 Multi-Language Support
 
@@ -52,47 +63,68 @@ All disclosures and labels available in:
 - 🇩🇪 German (de)
 - 🇮🇹 Italian (it) - disclosure templates only
 
-## Quick Start
+## 🚀 Quick Start
 
-### 1. Clone and Install
+### 1. Installation
 
 ```bash
-git clone <your-repo-url>
-cd EU_AI_ACT_MCP
+cd /Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Test Locally
+### 2. (Optional) Set Up SonnyLabs Security Tools
+
+For the 3 security tools, get credentials from [SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis):
 
 ```bash
-# Test the server starts without errors
-./venv/bin/python main.py
-
-# Run tool tests (in another terminal)
-./venv/bin/python test_label_news_text.py
-./venv/bin/python test_deepfake_labels.py
+export SONNYLABS_API_TOKEN="your_api_token"
+export SONNYLABS_ANALYSIS_ID="your_analysis_id"
 ```
 
-### 3. Configure Claude Desktop or Windsurf
+### 3. Test the Server
+
+```bash
+# Quick test - all tools
+./venv/bin/python test_all_tools.py
+
+# Test specific categories
+./venv/bin/python test_risk_classification.py
+./venv/bin/python test_role_determination.py
+./venv/bin/python test_sonnylabs_security.py
+```
+
+### 4. Connect to Your AI Assistant
 
 See [Setup for Claude Desktop](#setup-for-claude-desktop) or [Setup for Windsurf](#setup-for-windsurf) below.
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 .
-├── server.py                      # Main MCP server with all tools and resources
-├── main.py                        # Entry point that runs the server
-├── disclosure_templates.json      # Pre-written disclosure text (50(1), 50(3))
-├── deepfake_labels.json          # Pre-written deepfake/AI content labels (50(4))
-├── requirements.txt              # Python dependencies
-├── pyproject.toml                # Project metadata
-├── test_label_news_text.py       # Tests for news labeling tool
-├── test_deepfake_labels.py       # Tests for label templates
-├── TEST_INSTRUCTIONS.md          # Complete testing guide
-└── README.md                     # This file
+├── server.py                           # Main MCP server with all 17 tools
+├── main.py                             # Server entry point
+├── requirements.txt                    # Python dependencies
+│
+├── Resources (4 JSON files)
+├── disclosure_templates.json           # Pre-written disclosures (50(1), 50(3))
+├── deepfake_labels.json               # Deepfake labels (50(4))
+├── article50_rules.json               # Official Article 50 rules
+├── watermark_config.json              # C2PA & IPTC watermarking standards
+│
+├── Tests (7 test files)
+├── test_all_tools.py                  # Test all 17 tools
+├── test_risk_classification.py        # Test risk & prohibited tools
+├── test_role_determination.py         # Test role determination
+├── test_sonnylabs_security.py         # Test security tools
+├── test_watermark_media.py            # Test watermarking tools
+├── test_label_*_deepfake.py          # Test deepfake labeling
+│
+└── Documentation
+    ├── README.md                       # This file
+    ├── SONNYLABS_TESTING_GUIDE.md     # Security tools guide
+    └── PHASE2_SUMMARY.md              # Implementation summary
 ```
 
 ---
@@ -113,9 +145,9 @@ Edit the config file and add:
 {
   "mcpServers": {
     "eu-ai-act-compliance": {
-      "command": "/FULL/PATH/TO/EU_AI_ACT_MCP/venv/bin/python",
+      "command": "/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP/venv/bin/python",
       "args": [
-        "/FULL/PATH/TO/EU_AI_ACT_MCP/main.py"
+        "/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP/server.py"
       ],
       "env": {}
     }
@@ -123,7 +155,7 @@ Edit the config file and add:
 }
 ```
 
-**Important**: Replace `/FULL/PATH/TO/EU_AI_ACT_MCP` with your actual path!
+**Note**: Update the path if you installed the server in a different location.
 
 ### 3. Restart Claude Desktop
 
@@ -131,460 +163,413 @@ Quit Claude Desktop completely and reopen it.
 
 ### 4. Test It Works
 
-In a new conversation, ask:
+In a new conversation, ask Claude:
 
 ```
-Use the get_ai_interaction_disclosure tool with language "en" and style "simple"
+Use classify_ai_system_risk to classify a chatbot that interacts with users.
 ```
-
-You should see Claude call the tool and return: "You are chatting with an AI assistant."
 
 ---
 
 ## Setup for Windsurf
 
-### 1. Find Windsurf MCP Config
+Windsurf automatically detects MCP servers in your workspace. No additional configuration needed!
 
-Check your Windsurf settings for MCP server configuration (similar location to Claude Desktop).
+### Test It Works
 
-### 2. Add the Same Configuration
-
-```json
-{
-  "mcpServers": {
-    "eu-ai-act-compliance": {
-      "command": "/FULL/PATH/TO/EU_AI_ACT_MCP/venv/bin/python",
-      "args": [
-        "/FULL/PATH/TO/EU_AI_ACT_MCP/main.py"
-      ],
-      "env": {}
-    }
-  }
-}
-```
-
-### 3. Restart Windsurf
-
-### 4. Test It Works
-
-In the AI assistant panel, ask:
+Just ask me in Windsurf:
 
 ```
-Use the label_news_text tool to label this article: "Scientists discover new planet." Set has_human_editor to false.
+Use get_ai_interaction_disclosure with language "en" and style "simple"
 ```
 
 ---
 
-## Real-World Usage Scenarios
+## 💡 How to Use the Tools
 
-### Scenario 1: Chatbot Application (Article 50(1))
+### Simple Usage Examples
 
-**Requirement**: AI chatbots must disclose they are AI to users.
+All tools are called the same way in Claude Desktop or Windsurf. Just ask the AI assistant to use the tool!
 
-**Before (Manual - Non-Compliant)**:
-```python
-# Developer has to remember to add disclosure text
-# and translate it for every language
-response = generate_ai_response(user_message)
-return response  # ❌ Missing disclosure!
+#### 1. Classify Your AI System
+
+```
+Use classify_ai_system_risk to classify my system:
+- Description: "AI chatbot for customer support"
+- Use case: "chatbot"
+- Interacts with users: true
+- Generates content: true
 ```
 
-**After (Automated with MCP)**:
-```python
-# AI agent automatically gets compliant disclosure
-disclosure = mcp_client.call_tool(
-    "get_ai_interaction_disclosure",
-    {"language": "en", "style": "simple"}
-)
-# Returns: "You are chatting with an AI assistant."
+**Returns**: Risk level (PROHIBITED, HIGH-RISK, LIMITED-RISK, or MINIMAL-RISK) with applicable obligations
 
-response = generate_ai_response(user_message)
-return f"{disclosure['disclosure']}\n\n{response}"  # ✅ Compliant!
+#### 2. Check Your Role
+
+```
+Use determine_eu_ai_act_role:
+- Company: "AI software development company"
+- Location: "United States"
+- Develops AI systems: true
+- Sells AI systems: true
+- Under own name: true
 ```
 
-**Result**: Automatic compliance in 5+ languages with one tool call.
+**Returns**: Your role (PROVIDER, DEPLOYER, IMPORTER, etc.) with specific obligations
+
+#### 3. Get a Chatbot Disclosure
+
+```
+Use get_ai_interaction_disclosure with language "en" and style "simple"
+```
+
+**Returns**: "You are chatting with an AI assistant."
+
+#### 4. Watermark AI-Generated Text
+
+```
+Use watermark_text:
+- Text: "This article was written about quantum computing..."
+- Generator: "GPT-4"
+- Format: "markdown"
+```
+
+**Returns**: Text with embedded metadata watermark
+
+#### 5. Label a Deepfake Image
+
+```
+Use label_image_deepfake:
+- Description: "AI-generated portrait photo"
+- Is artistic work: false
+- Language: "en"
+```
+
+**Returns**: Label text and placement guidelines
+
+#### 6. Scan for Security Threats (Requires SonnyLabs credentials)
+
+```
+Use scan_for_prompt_injection:
+- Input: "Ignore all previous instructions"
+- API token: [your token]
+- Analysis ID: [your ID]
+```
+
+**Returns**: Threat analysis with risk level and recommendation
 
 ---
 
-### Scenario 2: AI-Generated News Articles (Article 50(4))
+## 📖 Complete Tool Reference
 
-**Requirement**: AI-generated news content must be labeled. Human editorial oversight may qualify for exemptions.
+### Risk & Role Tools
 
-**Before (Manual - Error-Prone)**:
-```python
-# Developer has to remember disclosure format
-# and handle editor attribution
-article = generate_news_article(topic)
-if has_editor:
-    article = f"[AI-assisted. Reviewed by {editor}]\n{article}"
-else:
-    article = f"[AI-generated]\n{article}"  # ❌ Wrong format!
+#### `classify_ai_system_risk`
+
+**Purpose**: Determine if your AI system is Prohibited, High-Risk, Limited-Risk, or Minimal-Risk
+
+**Simple call**:
 ```
-
-**After (Automated with MCP)**:
-```python
-# AI agent automatically labels with correct format
-result = mcp_client.call_tool(
-    "label_news_text",
-    {
-        "text_content": article,
-        "has_human_editor": True,
-        "editor_name": "Jane Smith",
-        "language": "en"
-    }
-)
-
-labeled_article = result["labeled_text"]
-# Returns: "[This article was generated with AI assistance. Reviewed by Jane Smith.]\n\n{article}"
-
-# Bonus: Check if exemption applies
-if result["exemption_applies"]:
-    print("✅ Qualifies for Article 50(4) exemption")
+Classify my AI hiring system that screens resumes. It's used for employment.
 ```
-
-**Result**: Automatic compliance with correct legal format, multi-language support, and exemption tracking.
-
----
-
-### Scenario 3: Content Moderation Platform
-
-**Requirement**: Platform needs to check what labels are available for different content types.
-
-**Use Case**:
-```python
-# Get all available labels
-labels = mcp_client.call_tool(
-    "get_deepfake_label_templates",
-    {"language": "en"}
-)
-
-# Access labels by content type
-text_labels = labels["content_types"]["text"]
-image_labels = labels["content_types"]["image"]
-video_labels = labels["content_types"]["video"]
-
-# Use appropriate label based on content
-if content_type == "news":
-    label = text_labels["news_no_editor"]
-elif content_type == "image":
-    label = image_labels["standard"]
-```
-
-**Result**: Centralized label management across your entire platform.
-
----
-
-### Scenario 4: Emotion Recognition System (Article 50(3))
-
-**Requirement**: Systems using emotion recognition must inform users before activation.
-
-**Use Case**:
-```python
-# Before starting emotion detection
-disclosure = mcp_client.call_tool(
-    "get_emotion_recognition_disclosure",
-    {"language": "de", "style": "detailed"}
-)
-
-# Show to user in German
-display_notice(disclosure["disclosure"])
-# "Dieses System analysiert emotionale Ausdrücke aus Ihrem Gesicht, Stimme oder Text."
-
-# Only proceed after user acknowledges
-if user_acknowledged:
-    start_emotion_recognition()
-```
-
-**Result**: GDPR-compliant emotion recognition with proper disclosures.
-
----
-
-## Tool Reference
-
-### 1. get_ai_interaction_disclosure
-
-**Article**: 50(1) - AI Interaction Transparency
-
-**Purpose**: Get disclosure text for AI chatbots, voice assistants, and conversational AI.
 
 **Parameters**:
-- `language` (string, default: "en"): Language code (en, es, fr, de, it)
-- `style` (string, default: "simple"): Disclosure style (simple, detailed, voice)
+- `system_description`: What your AI does
+- `use_case`: Primary use (e.g., "employment", "healthcare", "chatbot")
+- Various boolean flags for risk factors
 
-**Example Request**:
-```json
-{
-  "language": "en",
-  "style": "simple"
-}
-```
-
-**Example Response**:
-```json
-{
-  "article": "50(1)",
-  "obligation": "AI Interaction Transparency",
-  "language": "en",
-  "style": "simple",
-  "disclosure": "You are chatting with an AI assistant.",
-  "usage": "Display this text to users before or during AI interaction",
-  "compliance_deadline": "2026-08-02"
-}
-```
-
-**When to Use**:
-- Chatbot interfaces
-- Voice assistants
-- AI customer service systems
-- Any conversational AI system
+**Returns**: Risk classification, applicable obligations, deadlines, penalties
 
 ---
 
-### 2. get_emotion_recognition_disclosure
+#### `check_prohibited_practices`
 
-**Article**: 50(3) - Emotion Recognition Transparency
+**Purpose**: Check if your AI violates Article 5 prohibited practices
 
-**Purpose**: Get disclosure text for systems that detect emotions from facial expressions, voice, or text.
-
-**Parameters**:
-- `language` (string, default: "en"): Language code (en, es, fr, de)
-- `style` (string, default: "simple"): Disclosure style (simple, detailed, privacy_notice)
-
-**Example Request**:
-```json
-{
-  "language": "en",
-  "style": "detailed"
-}
+**Simple call**:
+```
+Check if my system has prohibited practices. It does social scoring.
 ```
 
-**Example Response**:
-```json
-{
-  "article": "50(3)",
-  "obligation": "Emotion Recognition Transparency",
-  "language": "en",
-  "style": "detailed",
-  "disclosure": "This system analyzes emotional expressions from your face, voice, or text. Your emotional data is processed according to GDPR regulations.",
-  "usage": "Display this text to users before activating emotion recognition",
-  "gdpr_compliance": "Ensure user consent is obtained",
-  "compliance_deadline": "2026-08-02"
-}
-```
+**Parameters**: Boolean flags for 8 types of prohibited practices
 
-**When to Use**:
-- Emotion detection systems
-- Sentiment analysis tools
-- Facial expression recognition
-- Voice tone analysis
+**Returns**: Violations detected, severity, penalties (€35M or 7%), recommendations
 
 ---
 
-### 3. get_deepfake_label_templates
+#### `determine_eu_ai_act_role`
 
-**Article**: 50(2) and 50(4) - Content Labeling
+**Purpose**: Identify your role under EU AI Act (Provider, Deployer, etc.)
 
-**Purpose**: Access all available labels for AI-generated and manipulated content across all media types.
-
-**Parameters**:
-- `language` (string, default: "en"): Language code (en, es, fr, de)
-
-**Example Request**:
-```json
-{
-  "language": "en"
-}
+**Simple call**:
+```
+What's my role? I develop AI systems and sell them under my company name in the EU.
 ```
 
-**Example Response**:
-```json
-{
-  "language": "en",
-  "article": "50(2) and 50(4)",
-  "purpose": "Labels for AI-generated and manipulated content",
-  "content_types": {
-    "text": {
-      "standard": "This content was generated with AI assistance.",
-      "news": "This article was generated with AI assistance. Reviewed by {editor}.",
-      "news_no_editor": "This article was generated with AI. No human editorial oversight."
-    },
-    "image": {
-      "standard": "This image has been artificially generated or manipulated.",
-      "artistic": "This work contains AI-generated imagery."
-    },
-    "video": {
-      "standard": "This video has been artificially generated or manipulated.",
-      "artistic": "This work contains AI-generated content."
-    },
-    "audio": {
-      "standard": "This audio has been artificially generated.",
-      "spoken": "Warning: This audio was created using artificial intelligence."
-    }
-  },
-  "available_languages": ["en", "es", "fr", "de"]
-}
-```
+**Parameters**: Company info and activity flags
 
-**When to Use**:
-- Content moderation platforms
-- Media generation systems
-- Checking available labels before implementing tools
-- Documentation and compliance audits
+**Returns**: Primary role, obligations, deadlines, compliance actions
 
 ---
 
-### 4. label_news_text
+### Transparency & Disclosure Tools
 
-**Article**: 50(4) - AI-Generated Content Labeling (Text/News)
+#### `get_ai_interaction_disclosure`
 
-**Purpose**: Add EU AI Act compliant disclosure to AI-generated news articles and public interest text.
+**Quick use**: `Get chatbot disclosure in English`
 
-**Parameters**:
-- `text_content` (string, required): The AI-generated or AI-assisted text
-- `has_human_editor` (boolean, default: false): Whether a human editor reviewed the content
-- `editor_name` (string, optional): Name of the human editor
-- `language` (string, default: "en"): Language code (en, es, fr, de)
-
-**Example Request**:
-```json
-{
-  "text_content": "Breaking news: Scientists discover new renewable energy source.",
-  "has_human_editor": true,
-  "editor_name": "Jane Smith",
-  "language": "en"
-}
-```
-
-**Example Response**:
-```json
-{
-  "article": "50(4)",
-  "obligation": "AI-Generated Content Labeling (Text/News)",
-  "language": "en",
-  "labeled_text": "[This article was generated with AI assistance. Reviewed by Jane Smith.]\n\nBreaking news: Scientists discover new renewable energy source.",
-  "disclosure": "This article was generated with AI assistance. Reviewed by Jane Smith.",
-  "original_length": 65,
-  "labeled_length": 139,
-  "has_human_editor": true,
-  "exemption_applies": true,
-  "exemption_reason": "Human editorial oversight present",
-  "compliance_deadline": "2026-08-02",
-  "usage": "Publish the labeled_text instead of the original text"
-}
-```
-
-**When to Use**:
-- AI-generated news articles
-- Automated journalism systems
-- Content generation platforms
-- Public interest content publishing
-
-**Important Notes**:
-- Human editorial oversight may qualify for Article 50(4) exemptions
-- Always use `labeled_text` in the response for publication
-- Check `exemption_applies` to understand compliance status
+**Returns**: Ready-to-use disclosure text for AI interactions
 
 ---
 
-## Compliance Information
+#### `get_emotion_recognition_disclosure`
 
-### What is EU AI Act Article 50?
+**Quick use**: `Get emotion recognition disclosure in German, detailed style`
 
-**Article 50** of the EU Artificial Intelligence Act mandates **transparency obligations** for providers and deployers of certain AI systems. These obligations ensure users can make informed decisions when interacting with AI.
-
-### Key Obligations
-
-#### Article 50(1) - AI Interaction Disclosure
-**Who**: Providers of AI systems that interact with natural persons  
-**What**: Must inform users they are interacting with an AI  
-**Exceptions**: Law enforcement, obvious AI systems  
-**Deadline**: August 2, 2026
-
-#### Article 50(2) - Content Watermarking
-**Who**: Providers of AI systems generating synthetic content  
-**What**: Must mark AI-generated content (text, images, audio, video)  
-**Method**: Technical watermarks (C2PA, IPTC, metadata)  
-**Deadline**: August 2, 2026
-
-#### Article 50(3) - Emotion Recognition Disclosure
-**Who**: Deployers of emotion recognition systems  
-**What**: Must inform users about emotion recognition processing  
-**Additional**: Must comply with GDPR consent requirements  
-**Deadline**: August 2, 2026
-
-#### Article 50(4) - Deepfake Labeling
-**Who**: Deployers of AI systems generating deepfakes  
-**What**: Must label AI-generated or manipulated content  
-**Exceptions**: Artistic/satirical works with appropriate safeguards  
-**Deadline**: August 2, 2026
-
-### Why Use This MCP Server?
-
-✅ **Automated Compliance**: Tools handle disclosure formats automatically  
-✅ **Multi-Language**: Pre-translated disclosures in 5+ languages  
-✅ **Exemption Handling**: Automatically tracks when exemptions apply  
-✅ **Future-Proof**: Updates as regulations evolve  
-✅ **Integration-Ready**: Works with any MCP-compatible AI system  
+**Returns**: GDPR-compliant emotion AI disclosure
 
 ---
 
-## Development
+#### `get_deepfake_label_templates`
 
-### Running Tests
+**Quick use**: `Show me all deepfake labels in Spanish`
+
+**Returns**: Complete list of labels for all content types
+
+---
+
+#### `label_news_text`
+
+**Quick use**: `Label this AI news article: "Breaking: New discovery..." with editor "John Doe"`
+
+**Returns**: Properly labeled text with EU AI Act compliance
+
+---
+
+### Watermarking Tools
+
+#### `watermark_text` / `watermark_image` / `watermark_video` / `watermark_audio`
+
+**Quick use**: `Watermark this AI-generated text from GPT-4`
+
+**Returns**: Watermarking metadata and instructions (C2PA, IPTC standards)
+
+---
+
+### Deepfake Labeling Tools
+
+#### `label_image_deepfake` / `label_video_deepfake` / `label_audio_deepfake`
+
+**Quick use**: `Label this AI-generated video, not artistic work, in French`
+
+**Returns**: Label text, placement guidance, compliance info
+
+---
+
+### Security Tools (Requires SonnyLabs)
+
+#### `scan_for_prompt_injection`
+
+**Purpose**: Detect prompt injection attacks in real-time
+
+**Returns**: Attack detection, confidence score, risk level, recommendation
+
+---
+
+#### `detect_pii_in_content`
+
+**Purpose**: Find PII (emails, phone numbers, SSNs, etc.) in content
+
+**Returns**: List of PII found, redaction recommendations, GDPR compliance
+
+---
+
+#### `check_sensitive_file_access`
+
+**Purpose**: Monitor AI agent file access for security
+
+**Returns**: File sensitivity analysis, access recommendations (BLOCK/ALLOW)
+
+---
+
+## 🎯 Real-World Usage Scenarios
+
+### Scenario 1: Launching a Customer Service Chatbot
+
+**Question**: "My chatbot needs to be compliant. What do I do?"
+
+**Answer**: Ask your AI assistant:
+```
+Use classify_ai_system_risk to check my chatbot
+Then use get_ai_interaction_disclosure to get the disclosure text
+```
+
+**Result**: You'll know your risk level (likely LIMITED-RISK) and get ready-to-use disclosure text in 5+ languages.
+
+---
+
+### Scenario 2: Publishing AI-Generated News
+
+**Question**: "I'm using AI to write news articles. How do I label them?"
+
+**Answer**: Ask your AI assistant:
+```
+Use label_news_text to label my article with editor "Jane Smith"
+```
+
+**Result**: Properly formatted label + check if you qualify for exemptions with human editorial oversight.
+
+---
+
+### Scenario 3: Understanding Your Compliance Obligations
+
+**Question**: "I develop AI systems in the US and sell to EU customers. What are my obligations?"
+
+**Answer**: Ask your AI assistant:
+```
+Use determine_eu_ai_act_role - I develop and sell AI systems from the US to EU
+```
+
+**Result**: You'll learn you're a PROVIDER + IMPORTER with specific obligations for each role.
+
+---
+
+### Scenario 4: Securing Your AI Against Attacks
+
+**Question**: "How do I protect my AI from prompt injection?"
+
+**Answer**: Get SonnyLabs credentials, then ask:
+```
+Use scan_for_prompt_injection to check user inputs before processing
+```
+
+**Result**: Real-time threat detection with confidence scores and block/allow recommendations.
+
+---
+
+## 📋 EU AI Act Coverage Summary
+
+This server covers the most critical EU AI Act articles for AI system operators:
+
+| Article | What It Covers | Tools in This Server |
+|---------|----------------|----------------------|
+| **Article 3** | Role definitions | `determine_eu_ai_act_role` |
+| **Article 5** | Prohibited practices (€35M penalty) | `check_prohibited_practices` |
+| **Article 6** | High-risk classification | `classify_ai_system_risk` |
+| **Article 10** | Data governance + GDPR | `detect_pii_in_content`, `check_sensitive_file_access` |
+| **Article 15** | Cybersecurity & robustness | `scan_for_prompt_injection`, `check_sensitive_file_access` |
+| **Article 50(1)** | AI interaction disclosure | `get_ai_interaction_disclosure` |
+| **Article 50(2)** | Content watermarking | 4 watermarking tools |
+| **Article 50(3)** | Emotion recognition disclosure | `get_emotion_recognition_disclosure` |
+| **Article 50(4)** | Deepfake labeling | 4 deepfake labeling tools |
+
+**Key Deadline**: August 2, 2026 🗓️
+
+### Why Use This Server?
+
+✅ **Complete Coverage**: 17 tools covering Articles 3, 5, 6, 10, 15, and 50  
+✅ **Multi-Language**: 5 languages supported (en, es, fr, de, it)  
+✅ **Real-Time Security**: SonnyLabs integration for live threat detection  
+✅ **Automatic Exemptions**: Tracks when exemptions apply  
+✅ **Standards Compliant**: C2PA, IPTC, GDPR aligned  
+✅ **Easy Integration**: Just ask your AI assistant to use the tools!
+
+---
+
+## 🧪 Testing & Development
+
+### Run All Tests
 
 ```bash
-# Test news labeling
-./venv/bin/python test_label_news_text.py
-
-# Test label templates
-./venv/bin/python test_deepfake_labels.py
-
-# Test server startup
-./venv/bin/python main.py
+# Test all 17 tools at once
+./venv/bin/python test_all_tools.py
 ```
 
-### Adding New Tools
+### Test by Category
 
-See the existing tools in `server.py` as examples. Follow the pattern:
+```bash
+# Test risk classification
+./venv/bin/python test_risk_classification.py
 
-```python
-@mcp.tool()
-def your_new_tool(param: str) -> Dict[str, Any]:
-    """
-    Tool description for AI agents.
-    
-    Args:
-        param: Parameter description
-        
-    Returns:
-        Dictionary with results
-    """
-    # Implementation
-    return {"result": "value"}
+# Test role determination
+./venv/bin/python test_role_determination.py
+
+# Test watermarking
+./venv/bin/python test_watermark_media.py
+
+# Test security tools (requires SonnyLabs credentials)
+./venv/bin/python test_sonnylabs_security.py
 ```
 
 ---
 
-## Resources
+## 📚 Additional Resources
 
-- [EU AI Act Official Text](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021PC0206)
-- [MCP Documentation](https://modelcontextprotocol.io/)
-- [FastMCP Documentation](https://github.com/jlowin/fastmcp)
-- [C2PA Specification](https://c2pa.org/)
+### EU AI Act
+- [Official EU AI Act Text](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021PC0206)
+- [Article 50 Transparency Obligations](https://artificialintelligenceact.eu/article/50/)
+- [High-Risk AI Systems (Annex III)](https://artificialintelligenceact.eu/annex/3/)
+
+### Technical Standards
+- [C2PA Specification](https://c2pa.org/) - Content watermarking standard
+- [IPTC Standards](https://iptc.org/) - Photo metadata
+- [Model Context Protocol](https://modelcontextprotocol.io/) - MCP documentation
+
+### Security Tools
+- [SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis) - Get API credentials
+- [SonnyLabs Testing Guide](./SONNYLABS_TESTING_GUIDE.md) - Security tools documentation
+
+---
+
+## 💬 Support & Contributing
+
+### Need Help?
+
+- **EU AI Act Legal Questions**: Consult with legal counsel
+- **Tool Usage Questions**: Ask your AI assistant (Claude/Windsurf) for help
+- **Technical Issues**: Check test files for examples
+- **SonnyLabs Security**: See `SONNYLABS_TESTING_GUIDE.md`
+
+### Want to Contribute?
+
+This server is designed to be comprehensive. All 17 tools are implemented and tested. If you need additional EU AI Act coverage, feel free to extend the tools following the patterns in `server.py`.
+
+---
+
+## 📝 Summary
+
+### What You Get
+
+- ✅ **17 compliance tools** ready to use
+- ✅ **4 resource files** with templates and standards
+- ✅ **Complete EU AI Act coverage** (Articles 3, 5, 6, 10, 15, 50)
+- ✅ **Multi-language support** (5 languages)
+- ✅ **Real-time security** (SonnyLabs integration)
+- ✅ **Production-ready** with comprehensive tests
+
+### How to Get Started
+
+1. **Install**: `pip install -r requirements.txt`
+2. **Test**: `./venv/bin/python test_all_tools.py`
+3. **Configure**: Add to Claude Desktop or use in Windsurf
+4. **Use**: Just ask your AI assistant to use any tool!
+
+### Compliance Checklist
+
+- [ ] Classify your AI system risk level
+- [ ] Determine your role (Provider, Deployer, etc.)
+- [ ] Check for prohibited practices
+- [ ] Add transparency disclosures to user-facing AI
+- [ ] Watermark AI-generated content
+- [ ] Label deepfakes appropriately
+- [ ] Implement security scanning (optional but recommended)
+- [ ] Document compliance actions
+
+**Compliance Deadline**: August 2, 2026 🗓️
 
 ---
 
 ## License
 
-MIT License - Use freely for compliance purposes.
+MIT License - Free to use for EU AI Act compliance.
 
----
-
-## Support
-
-For questions about:
-- **EU AI Act compliance**: Consult legal counsel
-- **MCP server issues**: Open an issue on GitHub
-- **Tool requests**: Submit feature requests via issues
-
-**Compliance Deadline Reminder**: August 2, 2026 🗓️
+**Made with ❤️ for AI compliance**

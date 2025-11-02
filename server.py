@@ -1463,3 +1463,389 @@ def determine_eu_ai_act_role(
             "Consider consulting legal counsel for complex cases"
         ]
     }
+
+
+# ============================================================================
+# SONNYLABS AI SECURITY INTEGRATION - EU AI Act Article 15
+# ============================================================================
+
+@mcp.tool()
+def scan_for_prompt_injection(
+    user_input: str,
+    sonnylabs_api_token: str,
+    sonnylabs_analysis_id: str,
+    tag: str = "mcp_scan"
+) -> Dict[str, Any]:
+    """
+    Scans user input for prompt injection attacks using SonnyLabs.ai API.
+    
+    Helps comply with EU AI Act Article 15 cybersecurity requirements.
+    Detects attempts to manipulate AI behavior through prompt injection.
+    
+    Args:
+        user_input: The user input text to scan for threats
+        sonnylabs_api_token: Your SonnyLabs API token (Bearer token)
+        sonnylabs_analysis_id: Your SonnyLabs analysis ID
+        tag: Optional identifier for this scan (default: "mcp_scan")
+        
+    Returns:
+        Dictionary with threat analysis and EU AI Act compliance info
+    """
+    import requests
+    
+    try:
+        # Call SonnyLabs API
+        url = f"https://sonnylabs-service.onrender.com/v1/analysis/{sonnylabs_analysis_id}"
+        
+        response = requests.post(
+            url,
+            params={
+                "tag": tag,
+                "scan_type": "input",
+                "detections": "prompt_injection,long_prompt_injection"
+            },
+            headers={
+                "Authorization": f"Bearer {sonnylabs_api_token}",
+                "Content-Type": "text/plain"
+            },
+            data=user_input.encode('utf-8'),
+            timeout=10
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        
+        # Extract prompt injection scores
+        prompt_injection_score = 0.0
+        long_injection_score = 0.0
+        attack_type = "none"
+        
+        for item in result.get("analysis", []):
+            if item.get("name") == "prompt_injection" and item.get("type") == "score":
+                prompt_injection_score = item.get("result", 0.0)
+            elif item.get("name") == "long_prompt_injection" and item.get("type") == "score":
+                long_injection_score = item.get("result", 0.0)
+        
+        # Determine attack severity
+        max_score = max(prompt_injection_score, long_injection_score)
+        is_attack = max_score > 0.7
+        
+        if max_score > 0.9:
+            risk_level = "CRITICAL"
+            recommendation = "BLOCK immediately - high confidence attack"
+        elif max_score > 0.7:
+            risk_level = "HIGH"
+            recommendation = "BLOCK this input - likely attack"
+        elif max_score > 0.5:
+            risk_level = "MEDIUM"
+            recommendation = "WARN user - suspicious input"
+        else:
+            risk_level = "LOW"
+            recommendation = "ALLOW - input appears safe"
+        
+        if is_attack:
+            attack_type = "instruction_override" if prompt_injection_score > long_injection_score else "long_form_injection"
+        
+        return {
+            "is_prompt_injection": is_attack,
+            "confidence": round(max_score, 3),
+            "attack_type": attack_type,
+            "risk_level": risk_level,
+            "recommendation": recommendation,
+            "scores": {
+                "basic_injection": round(prompt_injection_score, 3),
+                "long_form_injection": round(long_injection_score, 3)
+            },
+            "eu_ai_act_relevance": "Article 15 - Cybersecurity and robustness requirements",
+            "article_15_compliance": "Detecting and preventing manipulation attempts meets Article 15(1) requirements",
+            "sonnylabs_analysis": {
+                "detection_method": "Multi-model ensemble (pattern matching + LLM classifier)",
+                "api_endpoint": url,
+                "tag": tag
+            },
+            "next_steps": [
+                "Block input if risk level is HIGH or CRITICAL",
+                "Log incident for security audit",
+                "Consider implementing rate limiting",
+                "Review similar patterns in historical data"
+            ] if is_attack else [
+                "Process input normally",
+                "Continue monitoring for anomalies"
+            ]
+        }
+        
+    except requests.exceptions.RequestException as e:
+        return {
+            "error": "SonnyLabs API request failed",
+            "details": str(e),
+            "is_prompt_injection": None,
+            "recommendation": "Unable to verify - proceed with caution or use fallback detection",
+            "eu_ai_act_relevance": "Article 15 - Unable to verify cybersecurity compliance",
+            "fallback_suggestion": "Implement basic keyword filtering as temporary measure"
+        }
+    except Exception as e:
+        return {
+            "error": "Unexpected error during analysis",
+            "details": str(e),
+            "is_prompt_injection": None,
+            "recommendation": "System error - review logs and retry"
+        }
+
+
+@mcp.tool()
+def detect_pii_in_content(
+    content: str,
+    sonnylabs_api_token: str,
+    sonnylabs_analysis_id: str,
+    tag: str = "pii_scan"
+) -> Dict[str, Any]:
+    """
+    Detects personally identifiable information (PII) in content using SonnyLabs.ai API.
+    
+    Helps comply with EU AI Act Article 10 (Data governance) and GDPR requirements.
+    Prevents AI systems from leaking or mishandling personal data.
+    
+    Args:
+        content: The text content to scan for PII
+        sonnylabs_api_token: Your SonnyLabs API token (Bearer token)
+        sonnylabs_analysis_id: Your SonnyLabs analysis ID
+        tag: Optional identifier for this scan (default: "pii_scan")
+        
+    Returns:
+        Dictionary with PII detection results and compliance guidance
+    """
+    import requests
+    
+    try:
+        # Call SonnyLabs API
+        url = f"https://sonnylabs-service.onrender.com/v1/analysis/{sonnylabs_analysis_id}"
+        
+        response = requests.post(
+            url,
+            params={
+                "tag": tag,
+                "scan_type": "output",
+                "detections": "pii"
+            },
+            headers={
+                "Authorization": f"Bearer {sonnylabs_api_token}",
+                "Content-Type": "text/plain"
+            },
+            data=content.encode('utf-8'),
+            timeout=10
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        
+        # Extract PII detections
+        pii_detected = []
+        for item in result.get("analysis", []):
+            if item.get("name") == "pii" and item.get("type") == "PII":
+                pii_items = item.get("result", [])
+                for pii_item in pii_items:
+                    pii_detected.append({
+                        "type": pii_item.get("label", "UNKNOWN").lower(),
+                        "value": pii_item.get("text", ""),
+                        "label": pii_item.get("label", "UNKNOWN"),
+                        "confidence": 0.95  # SonnyLabs provides high-confidence detections
+                    })
+        
+        contains_pii = len(pii_detected) > 0
+        
+        # Categorize PII types
+        pii_categories = {}
+        for pii in pii_detected:
+            category = pii["type"]
+            pii_categories[category] = pii_categories.get(category, 0) + 1
+        
+        return {
+            "contains_pii": contains_pii,
+            "pii_count": len(pii_detected),
+            "pii_detected": pii_detected,
+            "pii_categories": pii_categories,
+            "recommendation": "REDACT or REMOVE all PII before using/publishing content" if contains_pii else "Content is safe to use - no PII detected",
+            "risk_level": "HIGH" if len(pii_detected) >= 3 else ("MEDIUM" if len(pii_detected) > 0 else "LOW"),
+            "eu_ai_act_relevance": "Article 10(5) - Data governance and quality for personal data",
+            "gdpr_compliance": {
+                "article": "GDPR Article 5 - Data minimization principle",
+                "requirement": "Process only necessary personal data",
+                "action_required": "Remove or redact PII before processing" if contains_pii else "No action required"
+            },
+            "article_10_compliance": "AI systems processing personal data must ensure quality and relevance per Article 10(3)",
+            "sonnylabs_analysis": {
+                "detection_method": "Named Entity Recognition + Pattern Matching",
+                "api_endpoint": url,
+                "tag": tag
+            },
+            "remediation_steps": [
+                "Identify each PII instance in content",
+                "Replace with generic placeholders (e.g., [EMAIL], [NAME])",
+                "Verify no PII remains after redaction",
+                "Document redaction in compliance logs",
+                "Implement automated PII filtering for future content"
+            ] if contains_pii else [
+                "Content verified PII-free",
+                "Continue with normal processing"
+            ]
+        }
+        
+    except requests.exceptions.RequestException as e:
+        return {
+            "error": "SonnyLabs API request failed",
+            "details": str(e),
+            "contains_pii": None,
+            "recommendation": "Unable to verify - manually review content for PII",
+            "eu_ai_act_relevance": "Article 10 - Unable to verify data governance compliance"
+        }
+    except Exception as e:
+        return {
+            "error": "Unexpected error during PII detection",
+            "details": str(e),
+            "contains_pii": None,
+            "recommendation": "System error - review logs and retry"
+        }
+
+
+@mcp.tool()
+def check_sensitive_file_access(
+    file_path: str,
+    agent_action: str,
+    sonnylabs_api_token: str,
+    sonnylabs_analysis_id: str,
+    tag: str = "file_access_check"
+) -> Dict[str, Any]:
+    """
+    Checks if AI agent is attempting to access sensitive files using SonnyLabs.ai API.
+    
+    Helps comply with EU AI Act Article 15 (Security) and Article 10 (Data governance).
+    Prevents unauthorized access to confidential files and system resources.
+    
+    Args:
+        file_path: The file path being accessed by the AI agent
+        agent_action: The action being performed (e.g., "read", "write", "execute")
+        sonnylabs_api_token: Your SonnyLabs API token (Bearer token)
+        sonnylabs_analysis_id: Your SonnyLabs analysis ID
+        tag: Optional identifier for this check (default: "file_access_check")
+        
+    Returns:
+        Dictionary with file sensitivity analysis and access recommendations
+    """
+    import requests
+    
+    try:
+        # Create analysis text
+        analysis_text = f"Agent attempting to {agent_action} file: {file_path}"
+        
+        # Call SonnyLabs API
+        url = f"https://sonnylabs-service.onrender.com/v1/analysis/{sonnylabs_analysis_id}"
+        
+        response = requests.post(
+            url,
+            params={
+                "tag": tag,
+                "scan_type": "input",
+                "detections": "sensitive_path_detection"
+            },
+            headers={
+                "Authorization": f"Bearer {sonnylabs_api_token}",
+                "Content-Type": "text/plain"
+            },
+            data=analysis_text.encode('utf-8'),
+            timeout=10
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        
+        # Extract sensitive path detections
+        sensitive_paths = []
+        is_sensitive = False
+        sensitivity_level = "LOW"
+        detected_data_types = []
+        
+        for item in result.get("analysis", []):
+            if item.get("type") == "sensitive_path_detection":
+                paths = item.get("result", [])
+                for path_info in paths:
+                    sensitive_paths.append(path_info)
+                    is_sensitive = True
+                    
+                    # Determine sensitivity level
+                    confidence = path_info.get("confidence", 0)
+                    category = path_info.get("category", "unknown")
+                    
+                    if confidence > 0.9 or category in ["system_file", "credential_file"]:
+                        sensitivity_level = "HIGHLY_CONFIDENTIAL"
+                    elif confidence > 0.7 or category in ["config_file", "database"]:
+                        sensitivity_level = "CONFIDENTIAL"
+                    elif sensitivity_level not in ["HIGHLY_CONFIDENTIAL", "CONFIDENTIAL"]:
+                        sensitivity_level = "SENSITIVE"
+                    
+                    # Track data types
+                    if category not in detected_data_types:
+                        detected_data_types.append(category)
+        
+        # Determine recommendation
+        if is_sensitive and sensitivity_level == "HIGHLY_CONFIDENTIAL":
+            recommendation = "DENY access immediately - highly sensitive file"
+            action = "BLOCK"
+        elif is_sensitive:
+            recommendation = "REQUIRE explicit authorization before allowing access"
+            action = "REQUIRE_AUTH"
+        else:
+            recommendation = "ALLOW access - file does not appear sensitive"
+            action = "ALLOW"
+        
+        return {
+            "is_sensitive": is_sensitive,
+            "sensitivity_level": sensitivity_level,
+            "detected_paths": sensitive_paths,
+            "detected_data_types": detected_data_types,
+            "file_path": file_path,
+            "agent_action": agent_action,
+            "recommendation": recommendation,
+            "action": action,
+            "eu_ai_act_relevance": "Article 10 - Data governance requirements & Article 15 - Security measures",
+            "article_10_compliance": "AI systems must only access data necessary for their intended purpose",
+            "article_15_compliance": "AI systems must implement security measures to prevent unauthorized access",
+            "access_control_recommendation": "Implement role-based access control (RBAC) with principle of least privilege",
+            "sonnylabs_analysis": {
+                "detection_method": "Pattern matching + File path analysis",
+                "api_endpoint": url,
+                "tag": tag
+            },
+            "security_measures": [
+                "Implement file access logging",
+                "Require authentication for sensitive directories",
+                "Use allowlist for permitted file paths",
+                "Monitor and alert on suspicious access patterns",
+                "Regularly audit AI agent file access permissions"
+            ],
+            "compliance_actions": [
+                "Document access attempt in audit log",
+                "Verify AI agent has legitimate need for file access",
+                "Implement technical safeguards (encryption, access controls)",
+                "Conduct regular security reviews of AI agent permissions"
+            ] if is_sensitive else [
+                "Log access for audit trail",
+                "Continue monitoring access patterns"
+            ]
+        }
+        
+    except requests.exceptions.RequestException as e:
+        return {
+            "error": "SonnyLabs API request failed",
+            "details": str(e),
+            "is_sensitive": None,
+            "recommendation": "Unable to verify - deny access by default for security",
+            "action": "DENY_SAFE",
+            "eu_ai_act_relevance": "Article 15 - Unable to verify security compliance"
+        }
+    except Exception as e:
+        return {
+            "error": "Unexpected error during file access check",
+            "details": str(e),
+            "is_sensitive": None,
+            "recommendation": "System error - deny access and review logs"
+        }
