@@ -259,6 +259,116 @@ Use scan_for_prompt_injection:
 
 ---
 
+## 📋 Copy-Paste Test Prompts
+
+Ready-to-use prompts for testing all tools in Claude Desktop or Windsurf. Just copy and paste!
+
+### 1. Risk Classification
+
+```
+Use classify_ai_system_risk to classify my system with these details:
+- system_description: "AI chatbot for customer support in healthcare"
+- use_case: "healthcare"
+- interacts_with_users: true
+- generates_content: true
+- processes_personal_data: true
+- makes_automated_decisions: false
+- in_critical_infrastructure: false
+- used_for_employment: false
+- used_for_education: false
+- used_for_law_enforcement: false
+- used_for_migration: false
+- used_for_justice: false
+
+What's my risk level and what obligations apply?
+```
+
+### 2. Check Prohibited Practices
+
+```
+Use check_prohibited_practices to check if my system has any Article 5 violations:
+- system_description: "Employee monitoring system with behavior scoring"
+- subliminal_manipulation: false
+- vulnerability_exploitation: false
+- social_scoring: true
+- biometric_categorization: false
+- emotion_recognition_workplace: true
+- emotion_recognition_education: false
+- untargeted_scraping: false
+- risk_assessment_personal_characteristics: false
+
+What violations are detected and what are the penalties?
+```
+
+### 3. Determine Your Role
+
+```
+Use determine_eu_ai_act_role to find out my role:
+- company_description: "US-based AI software company"
+- company_location: "United States"
+- develops_ai_system: true
+- uses_ai_system: false
+- sells_ai_system: true
+- distributes_in_eu: true
+- imports_to_eu: true
+- under_own_name_or_trademark: true
+- integrates_ai_into_product: false
+- represents_non_eu_provider: false
+
+What role(s) do I have and what are my obligations?
+```
+
+### 4. Get Chatbot Disclosure
+
+```
+Use get_ai_interaction_disclosure with language "en" and style "detailed"
+
+Show me the disclosure text I need for my chatbot.
+```
+
+### 5. Get Emotion Recognition Disclosure
+
+```
+Use get_emotion_recognition_disclosure with:
+- language: "en"
+- style: "privacy_notice"
+
+What disclosure do I need for emotion recognition?
+```
+
+### 6. Get All Deepfake Labels
+
+```
+Use get_deepfake_label_templates with language "es"
+
+Show me all available labels in Spanish.
+```
+
+### 7. Label AI-Generated News
+
+```
+Use label_news_text to label this article:
+- text_content: "Breaking: Scientists announce major breakthrough in renewable energy storage. New battery technology promises 10x capacity increase."
+- has_human_editor: true
+- editor_name: "Sarah Johnson"
+- language: "en"
+
+Show me the properly labeled version.
+```
+
+### 8. Watermark AI Text
+
+```
+Use watermark_text to watermark this content:
+- text_content: "Artificial intelligence is transforming how we work and live. From healthcare diagnostics to creative writing, AI systems are becoming integral to modern society. This article explores the implications of AI adoption across industries."
+- generator: "GPT-4"
+- format_type: "markdown"
+
+Show me the watermarking metadata and instructions.
+```
+
+---
+
 ## 📖 Complete Tool Reference
 
 ### Risk & Role Tools
