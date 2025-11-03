@@ -15,15 +15,22 @@ def test_tool_availability():
     print("=" * 70)
     
     from server import (
-        scan_for_prompt_injection,
-        detect_pii_in_content,
-        check_sensitive_file_access
+        get_disclosure_templates,
+        get_deepfake_labels,
+        get_article50_rules,
+        get_watermark_config,
+        get_ai_interaction_disclosure,
+        get_emotion_recognition_disclosure,
+        get_deepfake_label_templates
     )
     
-    print("\n✓ scan_for_prompt_injection imported successfully")
-    print("✓ detect_pii_in_content imported successfully")
-    print("✓ check_sensitive_file_access imported successfully")
-    
+    print("\n✓ get_disclosure_templates imported successfully")
+    print("✓ get_deepfake_labels imported successfully")
+    print("✓ get_article50_rules imported successfully")
+    print("✓ get_watermark_config imported successfully")
+    print("✓ get_ai_interaction_disclosure imported successfully")
+    print("✓ get_emotion_recognition_disclosure imported successfully")
+    print("✓ get_deepfake_label_templates imported successfully")
     print(f"\n✅ All SonnyLabs security tools available!")
     return True
 
@@ -35,8 +42,12 @@ def test_tool_signatures():
     
     from server import (
         scan_for_prompt_injection,
-        detect_pii_in_content,
-        check_sensitive_file_access
+        get_deepfake_labels,
+        get_article50_rules,
+        get_watermark_config,
+        get_ai_interaction_disclosure,
+        get_emotion_recognition_disclosure,
+        get_deepfake_label_templates
     )
     
     import inspect
@@ -49,13 +60,14 @@ def test_tool_signatures():
     assert 'sonnylabs_api_token' in params
     assert 'sonnylabs_analysis_id' in params
     
-    # Check detect_pii_in_content
-    sig = inspect.signature(detect_pii_in_content)
+    # Check scan_for_prompt_injection 
+    sig = inspect.signature(scan_for_prompt_injection)
     params = list(sig.parameters.keys())
-    print(f"✓ detect_pii_in_content parameters: {params}")
-    assert 'content' in params
+    print(f"✓ scan_for_prompt_injection parameters: {params}")
+    assert 'user_input' in params
     assert 'sonnylabs_api_token' in params
     assert 'sonnylabs_analysis_id' in params
+    assert 'tag' in params
     
     # Check check_sensitive_file_access
     sig = inspect.signature(check_sensitive_file_access)
@@ -75,11 +87,19 @@ def test_error_handling():
     print("Test: Error Handling (Invalid Credentials)")
     print("=" * 70)
     
-    from server import scan_for_prompt_injection
+    from server import (
+        get_disclosure_templates,
+        get_deepfake_labels,
+        get_article50_rules,
+        get_watermark_config,
+        get_ai_interaction_disclosure,
+        get_emotion_recognition_disclosure,
+        get_deepfake_label_templates
+    )
     
     # Call with invalid credentials
-    result = scan_for_prompt_injection(
-        user_input="Test input",
+    result = get_ai_interaction_disclosure(
+        language ="Test input",
         sonnylabs_api_token="invalid_token",
         sonnylabs_analysis_id="invalid_id",
         tag="test"
@@ -102,14 +122,14 @@ def test_compliance_fields():
     print("=" * 70)
     
     from server import (
-        scan_for_prompt_injection,
-        detect_pii_in_content,
-        check_sensitive_file_access
+        get_ai_interaction_disclosure,
+        get_emotion_recognition_disclosure,
+        get_deepfake_label_templates
     )
     
     # Test scan_for_prompt_injection
-    result1 = scan_for_prompt_injection(
-        user_input="Test",
+    result1 = get_ai_interaction_disclosure(
+        language="Test",
         sonnylabs_api_token="test",
         sonnylabs_analysis_id="test"
     )
@@ -117,8 +137,8 @@ def test_compliance_fields():
     if 'eu_ai_act_relevance' in result1 or 'error' in result1:
         print("\n✓ scan_for_prompt_injection includes Article 15 reference")
     
-    # Test detect_pii_in_content
-    result2 = detect_pii_in_content(
+    # Test get_emotion_recognition_disclosure
+    result2 = get_emotion_recognition_disclosure(
         content="Test content",
         sonnylabs_api_token="test",
         sonnylabs_analysis_id="test"
@@ -128,7 +148,7 @@ def test_compliance_fields():
         print("✓ detect_pii_in_content includes Article 10 reference")
     
     # Test check_sensitive_file_access
-    result3 = check_sensitive_file_access(
+    result3 = get_deepfake_label_templates(
         file_path="/test/path",
         agent_action="read",
         sonnylabs_api_token="test",
