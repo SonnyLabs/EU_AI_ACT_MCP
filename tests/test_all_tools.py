@@ -5,7 +5,7 @@ Comprehensive test for ALL EU AI Act Article 50 compliance tools
 
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from server import (
     get_ai_interaction_disclosure,
