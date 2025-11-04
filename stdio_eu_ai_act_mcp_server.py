@@ -1734,3 +1734,8 @@ def check_sensitive_file_access(
             "is_sensitive": None,
             "recommendation": "System error - deny access and review logs"
         }
+
+if __name__ == "__main__":
+    # Run the MCP server using FastMCP's built-in run method
+    # This will start the server and make all tools and resources available via MCP protocol
+    mcp.run()
