@@ -1,10 +1,15 @@
 # EU AI Act Compliance MCP Server 🇪🇺
 
-A comprehensive [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server providing **complete EU AI Act compliance tools** for AI systems. This server helps AI applications meet transparency, security, and governance requirements across the entire EU AI Act framework.
+A comprehensive [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server providing **EU AI Act compliance tools** for AI systems. This server helps AI applications meet transparency, security, and governance requirements across the entire EU AI Act framework.
+
+ ⚠️ BETA SOFTWARE - NOT LEGAL ADVICE
+   This MCP server is in active development. It provides technical tools to assist 
+   with EU AI Act compliance but does NOT constitute legal advice. Consult qualified 
+   legal counsel for compliance decisions.
 
 ## 🎯 What Does This Server Do?
 
-This MCP server provides **17 automated compliance tools** that help your AI systems:
+This MCP server provides **17 automated compliance tools** that helps you and your AI systems to comply with the EU AI Act:
 
 - ✅ **Classify AI systems** by risk level (Prohibited, High-Risk, Limited-Risk, Minimal-Risk)
 - ✅ **Determine your role** under EU AI Act (Provider, Deployer, Importer, etc.)
@@ -14,7 +19,7 @@ This MCP server provides **17 automated compliance tools** that help your AI sys
 - ✅ **Label deepfakes** (Article 50(4) - all media types)
 - ✅ **Detect security threats** (Article 15 - prompt injections)
 
-**Compliance Deadline**: August 2, 2026 🗓️
+**Compliance Deadline For Several Risk Types**: August 2, 2026 🗓️
 
 ## 📦 What's Included
 
@@ -684,5 +689,3 @@ This server is designed to be comprehensive. All 17 tools are implemented and te
 ## License
 
 MIT License - Free to use for EU AI Act compliance.
-
-**Made with ❤️ for AI compliance**
