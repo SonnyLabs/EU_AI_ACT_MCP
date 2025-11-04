@@ -11,16 +11,12 @@ import json
 from typing import Dict, Any, List
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
-import os
 
 # Load environment variables (if needed for future extensions)
 load_dotenv()
 
-os.environ['PORT'] = '8001'
-
 # Create an MCP server with a name
-mcp = FastMCP("EU_AI_ACT_MCP", stateless_http=True)
-
+mcp = FastMCP("EU_AI_ACT_MCP", stateless_http=True,host="74.208.100.69",port=8001)
 
 # ============================================================================
 # RESOURCES - Data files that agents can read

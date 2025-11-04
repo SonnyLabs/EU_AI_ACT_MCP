@@ -21,7 +21,8 @@ def test_tool_availability():
         get_watermark_config,
         get_ai_interaction_disclosure,
         get_emotion_recognition_disclosure,
-        get_deepfake_label_templates
+        get_deepfake_label_templates,
+        check_sensitive_file_access
     )
     
     print("\n✓ get_disclosure_templates imported successfully")
@@ -47,7 +48,8 @@ def test_tool_signatures():
         get_watermark_config,
         get_ai_interaction_disclosure,
         get_emotion_recognition_disclosure,
-        get_deepfake_label_templates
+        get_deepfake_label_templates,
+        check_sensitive_file_access
     )
     
     import inspect
@@ -100,9 +102,7 @@ def test_error_handling():
     # Call with invalid credentials
     result = get_ai_interaction_disclosure(
         language ="Test input",
-        sonnylabs_api_token="invalid_token",
-        sonnylabs_analysis_id="invalid_id",
-        tag="test"
+        style="test"
     )
     
     print(f"\n✓ Tool returned without crashing")
@@ -130,8 +130,7 @@ def test_compliance_fields():
     # Test scan_for_prompt_injection
     result1 = get_ai_interaction_disclosure(
         language="Test",
-        sonnylabs_api_token="test",
-        sonnylabs_analysis_id="test"
+        style="test"
     )
     
     if 'eu_ai_act_relevance' in result1 or 'error' in result1:
@@ -139,20 +138,16 @@ def test_compliance_fields():
     
     # Test get_emotion_recognition_disclosure
     result2 = get_emotion_recognition_disclosure(
-        content="Test content",
-        sonnylabs_api_token="test",
-        sonnylabs_analysis_id="test"
+        language="Test content",
+        style="test"
     )
     
     if 'eu_ai_act_relevance' in result2 or 'error' in result2:
         print("✓ detect_pii_in_content includes Article 10 reference")
     
-    # Test check_sensitive_file_access
+    # Test get_deepfake_label_templates
     result3 = get_deepfake_label_templates(
-        file_path="/test/path",
-        agent_action="read",
-        sonnylabs_api_token="test",
-        sonnylabs_analysis_id="test"
+        language="test"
     )
     
     if 'eu_ai_act_relevance' in result3 or 'error' in result3:
