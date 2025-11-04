@@ -682,10 +682,4 @@ This server is designed to be comprehensive. All 17 tools are implemented and te
 - [ ] Implement security scanning (optional but recommended)
 - [ ] Document compliance actions
 
-**Compliance Deadline**: August 2, 2026 🗓️
 
----
-
-## License
-
-MIT License - Free to use for EU AI Act compliance.
