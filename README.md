@@ -182,17 +182,53 @@ Use classify_ai_system_risk to classify a chatbot that interacts with users.
 
 ## Setup for Windsurf
 
-Windsurf automatically detects MCP servers in your workspace. No additional configuration needed!
+### 1. Find Your Config File
 
-### Test It Works
+The Windsurf MCP configuration file is located at:
+
+**macOS/Linux**: `~/.codeium/windsurf/mcp_config.json`  
+**Windows**: `%USERPROFILE%\.codeium\windsurf\mcp_config.json`
+
+### 2. Add This Server Configuration
+
+Edit the config file and add:
+
+```json
+{
+  "mcpServers": {
+    "eu-ai-act-compliance": {
+      "command": "/path/to/your/project/venv/bin/python",
+      "args": [
+        "/path/to/your/project/main.py"
+      ],
+      "env": {
+        "SONNYLABS_API_TOKEN": "your_sonnylabs_api_token_here",
+        "SONNYLABS_ANALYSIS_ID": "your_analysis_id_here"
+      }
+    }
+  }
+}
+```
+
+Replace the placeholders:
+- `/path/to/your/project/venv/bin/python` - Path to your virtual environment Python binary
+- `/path/to/your/project/main.py` - Path to the main.py file in this repo
+- `your_sonnylabs_api_token_here` - Your SonnyLabs API token (optional, only needed for security tools)
+- `your_analysis_id_here` - Your SonnyLabs analysis ID (optional, only needed for security tools)
+
+**Note**: On Windows, use backslashes in paths (e.g., `C:\\path\\to\\project\\venv\\Scripts\\python.exe`)
+
+### 3. Restart Windsurf
+
+Quit Windsurf completely and reopen it.
+
+### 4. Test It Works
 
 Just ask me in Windsurf:
 
 ```
 Use get_ai_interaction_disclosure with language "en" and style "simple"
-```
-
-**Note**: Currently, the SonnyLabs credentials of the API key and analysis ID need to be included in a separate secrets file, like .env . 
+``` 
 
 ---
 
