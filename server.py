@@ -1,52 +1,22 @@
 # server.py
 """
-EU AI Act Article 50 Compliance MCP Server (Unified)
+EU AI Act Article 50 Compliance MCP Server
 
 This MCP server provides tools and resources for EU AI Act Article 50 compliance,
 including transparency obligations for AI systems.
-
-Usage:
-    python server.py --stdio   # Run in stdio mode (default)
-    python server.py --http    # Run in HTTP mode
-    python server.py --http --host 0.0.0.0 --port 8080  # Custom host/port
 """
 
 import os
-import sys
 import json
-import argparse
 from typing import Dict, Any, List
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
-import logging
 
 # Load environment variables (if needed for future extensions)
 load_dotenv()
 
-# Parse command line arguments
-parser = argparse.ArgumentParser(description='EU AI Act MCP Server')
-parser.add_argument('--stdio', action='store_true', help='Run in stdio mode (default)')
-parser.add_argument('--http', action='store_true', help='Run in HTTP mode')
-parser.add_argument('--host', type=str, default='127.0.0.1', help='HTTP host (default: 127.0.0.1)')
-parser.add_argument('--port', type=int, default=8001, help='HTTP port (default: 8001)')
-args = parser.parse_args()
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-# Determine mode - default to stdio if neither specified
-if args.http:
-    mode = 'http'
-else:
-    mode = 'stdio'  # Default
-
-# Create an MCP server with appropriate configuration
-if mode == 'http':
-    mcp = FastMCP("EU_AI_ACT_MCP", stateless_http=True, host=args.host, port=args.port)
-    logger.info(f"Starting EU AI Act MCP Server in HTTP mode on {args.host}:{args.port}")
-else:
-    mcp = FastMCP("EU_AI_ACT_MCP")
-    logger.info("Starting EU AI Act MCP Server in stdio mode")
+# Create an MCP server with a name
+mcp = FastMCP("EU_AI_ACT_MCP")
 
 
 # ============================================================================
