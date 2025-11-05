@@ -69,10 +69,15 @@ All disclosures and labels available in:
 
 ## 🚀 Quick Start
 
+### Pre-Setup
+
+Download this repo locally / Git clone it.
+
+
 ### 1. Installation
 
 ```bash
-cd /Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP
+cd FILE_PATH_OF_THIS_MCP
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -80,7 +85,7 @@ pip install -r requirements.txt
 
 ### 2. (Optional) Set Up SonnyLabs Security Tools
 
-For the 3 security tools, get credentials from [SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis):
+For the security tools, get credentials from [SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis):
 
 ```bash
 export SONNYLABS_API_TOKEN="your_api_token"
@@ -99,9 +104,11 @@ export SONNYLABS_ANALYSIS_ID="your_analysis_id"
 ./venv/bin/python test_sonnylabs_security.py
 ```
 
-### 4. Connect to Your AI Assistant
+### 4. Connect to Your AI Assistant or AI Agent
 
 See [Setup for Claude Desktop](#setup-for-claude-desktop) or [Setup for Windsurf](#setup-for-windsurf) below.
+
+This has also been tested on a CrewAI agent.
 
 ## 📁 Project Structure
 
@@ -149,17 +156,15 @@ Edit the config file and add:
 {
   "mcpServers": {
     "eu-ai-act-compliance": {
-      "command": "/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP/venv/bin/python",
+      "command": "FILE_PATH_OF_THIS_MCP/venv/bin/python",
       "args": [
-        "/Users/liana/Documents/AI/sonnylabs/EU_AI_ACT_MCP/server.py"
+        "FILE_PATH_OF_THIS_MCP/server.py"
       ],
       "env": {}
     }
   }
 }
 ```
-
-**Note**: Update the path if you installed the server in a different location.
 
 ### 3. Restart Claude Desktop
 
@@ -186,6 +191,8 @@ Just ask me in Windsurf:
 ```
 Use get_ai_interaction_disclosure with language "en" and style "simple"
 ```
+
+**Note**: Currently, the SonnyLabs credentials of the API key and analysis ID need to be included in a separate secrets file, like .env . 
 
 ---
 
