@@ -12,6 +12,8 @@ import argparse
 from typing import Dict, Any, List
 from fastmcp import FastMCP
 from dotenv import load_dotenv
+import uvicorn
+from starlette.middleware.cors import CORSMiddleware
 
 # Load environment variables (if needed for future extensions)
 load_dotenv()
@@ -26,7 +28,7 @@ if __name__ == "__main__":
     parser.add_argument('--port', type=int, default=8001, help='HTTP port (default: 8001)')
     args = parser.parse_args()
     if args.http:
-        mcp = FastMCP("EU_AI_ACT_MCP", stateless_http=True, host=args.host, port=args.port)
+        mcp = FastMCP("EU_AI_ACT_MCP", stateless_http=True, json_response=True)
 else:
     mcp = FastMCP("EU_AI_ACT_MCP")
 
@@ -39,7 +41,6 @@ else:
 def get_disclosure_templates() -> str:
     """
     Provides pre-written disclosure text templates for EU AI Act Article 50 compliance.
-    
     Contains:
     - AI interaction disclosures (Article 50(1))
     - Emotion recognition disclosures (Article 50(3))
@@ -1751,6 +1752,19 @@ if __name__ == "__main__":
     # Run the MCP server using FastMCP's built-in run method
     # This will start the server and make all tools and resources available via MCP protocol
     if args.http:
-        mcp.run(transport="streamable-http", path="/sonnylabs")
+
+        # Get the Starlette app for streamable HTTP
+        starlette_app = mcp.streamable_http_app()
+
+        starlette_app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],  # Allow all origins for development; restrict in production
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+        # Run the server
+        uvicorn.run(starlette_app, host=args.host, port=args.port)
     else:
         mcp.run()
