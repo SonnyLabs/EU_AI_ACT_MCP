@@ -19,7 +19,6 @@ load_dotenv()
 # Create an MCP server with a name
 mcp = FastMCP("EU_AI_ACT_MCP")
 
-
 # ============================================================================
 # RESOURCES - Data files that agents can read
 # ============================================================================
