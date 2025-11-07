@@ -37,10 +37,6 @@ if __name__ == "__main__":
 
         
 else:
-    mcp = FastMCP("EU_AI_ACT_MCP")
-
-
-
     # Run the MCP server using FastMCP's built-in run method
     # This will start the server and make all tools and resources available via MCP protocol
     mcp.run()
