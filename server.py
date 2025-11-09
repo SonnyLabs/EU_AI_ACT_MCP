@@ -16,7 +16,8 @@ from dotenv import load_dotenv
 # Load environment variables (if needed for future extensions)
 load_dotenv()
 
-mcp = FastMCP("EU_AI_ACT_MCP", stateless_http=True)
+stateless_http = True
+mcp = FastMCP("EU_AI_ACT_MCP")
 # ============================================================================
 # RESOURCES - Data files that agents can read
 # ============================================================================

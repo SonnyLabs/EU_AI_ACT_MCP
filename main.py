@@ -21,7 +21,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.http:
         # Get the Starlette app for streamable HTTP
-        starlette_app = mcp.streamable_http_app()
+        starlette_app = mcp.http_app()
 
         starlette_app.add_middleware(
             CORSMiddleware,
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
 
         
-else:
+    else:
     # Run the MCP server using FastMCP's built-in run method
     # This will start the server and make all tools and resources available via MCP protocol
-    mcp.run()
+        mcp.run()
