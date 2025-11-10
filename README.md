@@ -1,15 +1,19 @@
 # EU AI Act Compliance MCP Server 🇪🇺
 
-A comprehensive [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server providing **EU AI Act compliance tools** for AI systems. This server helps AI applications meet transparency, security, and governance requirements across the entire EU AI Act framework.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server providing **EU AI Act compliance tools** for AI systems. This server helps developers of AI applications, like chatbots and AI agents, meet transparency, security, and governance requirements across the entire EU AI Act framework.
 
  ⚠️ BETA SOFTWARE - NOT LEGAL ADVICE
+   
    This MCP server is in active development. It provides technical tools to assist 
    with EU AI Act compliance but does NOT constitute legal advice. Consult qualified 
    legal counsel for compliance decisions.
 
+ 🧑 CONTRIBUTORS NEEDED!
+   This solution is in its early phases and there are EU AI Act requirements left to add, as well as general guidance. If you would like to contribute to improve the    solution for everyone, we would love that!    Please see the Contributing guide [here](https://github.com/SonnyLabs/EU_AI_ACT_MCP?tab=contributing-ov-file) for general guidance on contributing. 
+
 ## 🎯 What Does This Server Do?
 
-This MCP server provides **17 automated compliance tools** that helps you and your AI systems to comply with the EU AI Act:
+This MCP server provides **automated compliance tools** that helps you and your AI systems to comply with the EU AI Act:
 
 - ✅ **Classify AI systems** by risk level (Prohibited, High-Risk, Limited-Risk, Minimal-Risk)
 - ✅ **Determine your role** under EU AI Act (Provider, Deployer, Importer, etc.)
@@ -71,7 +75,7 @@ All disclosures and labels available in:
 
 ### Pre-Setup
 
-Download this repo locally / Git clone it.
+Git clone this repo locally.
 
 
 ### 1. Installation
@@ -83,7 +87,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. (Optional) Set Up SonnyLabs Security Tools
+### 2. Set Up SonnyLabs Security Tools
 
 For the security tools, get credentials from [SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis):
 
@@ -91,6 +95,10 @@ For the security tools, get credentials from [SonnyLabs Dashboard](https://sonny
 export SONNYLABS_API_TOKEN="your_api_token"
 export SONNYLABS_ANALYSIS_ID="your_analysis_id"
 ```
+
+NOTE: In order to get the SonnyLabs API token and analysis ID, after registering on the [SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis), you can generate a new API key at [API keys on the SonnyLabs Dashboard](https://sonnylabs-service.onrender.com/analysis/api-keys). The next step is to [create a new analysis](https://sonnylabs-service.onrender.com/analysis/new) on the SonnyLabs dashboard, and get the analysis ID associated with it.  
+
+There is a genereous free tier where you can call the SonnyLabs API.
 
 ### 3. Test the Server
 
@@ -109,7 +117,7 @@ export SONNYLABS_ANALYSIS_ID="your_analysis_id"
 See [Setup for Claude Desktop](#setup-for-claude-desktop), [Setup for Windsurf](#setup-for-windsurf)
 or [Setup for cursor](#setup-for-cursor) below.
 
-This has also been tested on a CrewAI agent.
+This also works with AI agents like CrewAI agents.
 
 ## 📁 Project Structure
 
