@@ -106,7 +106,8 @@ export SONNYLABS_ANALYSIS_ID="your_analysis_id"
 
 ### 4. Connect to Your AI Assistant or AI Agent
 
-See [Setup for Claude Desktop](#setup-for-claude-desktop) or [Setup for Windsurf](#setup-for-windsurf) below.
+See [Setup for Claude Desktop](#setup-for-claude-desktop), [Setup for Windsurf](#setup-for-windsurf)
+or [Setup for cursor](#setup-for-cursor) below.
 
 This has also been tested on a CrewAI agent.
 
@@ -229,6 +230,65 @@ Just ask me in Windsurf:
 ```
 Use get_ai_interaction_disclosure with language "en" and style "simple"
 ``` 
+
+
+## Setup for Cursor
+
+### 1. Open Cursor settings -> Tools & MCP and Click "Add Custom MCP"
+
+### 2. Edit the config file to add This Server Configuration
+
+Edit the config file and add:
+
+{
+  "mcpServers": {
+    "eu-ai-act-compliance": {
+      "command": "/path/to/your/project/venv/bin/python",
+      "args": [
+        "/path/to/your/project/main.py"
+      ],
+      "env": {
+        "SONNYLABS_API_TOKEN": "your_sonnylabs_api_token_here",
+        "SONNYLABS_ANALYSIS_ID": "your_analysis_id_here"
+      }
+    }
+  }
+}
+
+### 3. Replace the placeholders:
+- `/path/to/your/project/venv/bin/python` - Path to your virtual environment Python binary
+- `/path/to/your/project/main.py` - Path to the main.py file in this repo
+- `your_sonnylabs_api_token_here` - Your SonnyLabs API token (optional, only needed for security tools)
+- `your_analysis_id_here` - Your SonnyLabs analysis ID (optional, only needed for security tools)
+
+**Note**: On Windows, use backslashes in paths (e.g., `C:\\path\\to\\project\\venv\\Scripts\\python.exe`)
+
+### 4. Restart Cursor 
+
+Quit Cursor completely and reopen it.
+
+
+### 5. Test It Works
+
+Toggle the AI pane and create a new chat to ask:
+
+```
+Use get_ai_interaction_disclosure with language "en" and style "simple"
+'''
+A dialog should appear offering to Run the get_ai_interaction_disclosure tool. Click Run and you should
+see a response like this:
+
+{
+"article": "50(1)",
+"obligation": "AI Interaction Transparency",
+"language": "en",
+"style": "simple",
+"disclosure": "You are chatting with an AI assistant.",
+"usage": "Display this text to users before or during AI interaction",
+"compliance_deadline": "2026-08-02"
+}
+You are chatting with an AI assistant
+
 
 ---
 
