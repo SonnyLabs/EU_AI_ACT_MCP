@@ -13,7 +13,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) server provid
 
 ## 🎯 What Does This Server Do?
 
-This MCP server provides **automated compliance tools** that helps you and your AI systems to comply with the EU AI Act:
+This MCP server, which can be self-hosted, provides **automated compliance tools** that helps you and your AI systems to comply with the EU AI Act:
 
 - ✅ **Classify AI systems** by risk level (Prohibited, High-Risk, Limited-Risk, Minimal-Risk)
 - ✅ **Determine your role** under EU AI Act (Provider, Deployer, Importer, etc.)
@@ -24,6 +24,9 @@ This MCP server provides **automated compliance tools** that helps you and your 
 - ✅ **Detect security threats** (Article 15 - prompt injections)
 
 **Compliance Deadline For Several Risk Types**: August 2, 2026 🗓️
+
+## 📦 What if I want the hosted MCP server instead of self-hosting it myself?
+You can become a design partner and use our hosted EU AI Act MCP server at (SonnyLabs.ai)[https://sonnylabs.ai/eu-ai-act-compliance].
 
 ## 📦 What's Included
 
