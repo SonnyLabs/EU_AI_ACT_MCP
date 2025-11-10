@@ -26,7 +26,7 @@ This MCP server, which can be self-hosted, provides **automated compliance tools
 **Compliance Deadline For Several Risk Types**: August 2, 2026 🗓️
 
 ## 📦 What if I want the hosted MCP server instead of self-hosting it myself?
-You can become a design partner and use our hosted EU AI Act MCP server at (SonnyLabs.ai)[https://sonnylabs.ai/eu-ai-act-compliance].
+You can become a design partner and use our hosted EU AI Act MCP server at [SonnyLabs.ai](https://sonnylabs.ai/eu-ai-act-compliance).
 
 ## 📦 What's Included
 
