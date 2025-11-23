@@ -1732,3 +1732,4 @@ def check_sensitive_file_access(
             "is_sensitive": None,
             "recommendation": "System error - deny access and review logs"
         }
+
