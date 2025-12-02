@@ -3,17 +3,19 @@ requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "basic-mcp-server"
+name = "eu_ai_act_mcp"
 version = "0.1.0"
 authors = [
-  { name = "Your Name" },
+  { name = "Liana" },
 ]
-description = "A basic MCP (Model Context Protocol) server template"
+description = "EU_AI_ACT_MCP (Model Context Protocol) server"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
-  "mcp>=1.0.0",
   "python-dotenv>=1.0.0",
+  "fastmcp>=2.1.3",
+  "requests>=2.31.0",
+  "uvicorn>=0.38.0"
 ]
 
 [project.optional-dependencies]
@@ -21,6 +23,8 @@ dev = [
   "pytest>=7.0.0",
 ]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["*"]
+[tool.setuptools]
+py-modules = ["main", "server", "server_v2"]
+
+[project.scripts]
+eu-ai-act-mcp = "main:main"
