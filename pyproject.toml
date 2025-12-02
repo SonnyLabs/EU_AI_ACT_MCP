@@ -31,4 +31,4 @@ include = ["*"]
 
 
 [project.scripts]
-eu_ai_act_mcp = "__main__:main.py"
+eu_ai_act_mcp = "eu_ai_act_mcp.__main__:main.py"
