@@ -3,10 +3,10 @@ requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "basic-mcp-server"
+name = "EU_AI_ACT_MCP"
 version = "0.1.0"
 authors = [
-  { name = "Your Name" },
+  { name = "Liana" },
 ]
 description = "A basic MCP (Model Context Protocol) server template"
 readme = "README.md"
@@ -24,3 +24,8 @@ dev = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["*"]
+
+
+[project.scripts]
+mcp-server = "EU_AI_ACT_MCP.__main__:main"
+
