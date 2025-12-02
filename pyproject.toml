@@ -3,12 +3,12 @@ requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "eu_ai_act_mcp"
+name = "EU_AI_ACT_MCP"
 version = "0.1.0"
 authors = [
   { name = "Liana" },
 ]
-description = "A basic MCP (Model Context Protocol) server template"
+description = "EU_AI_ACT MCP (Model Context Protocol) server"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
@@ -31,4 +31,4 @@ include = ["*"]
 
 
 [project.scripts]
-eu_ai_act_mcp = "eu_ai_act_mcp.__main__:main.py"
+eu_ai_act_mcp = "EU_AI_ACT_MCP.__main__:main.py"
