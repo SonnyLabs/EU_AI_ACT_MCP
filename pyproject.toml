@@ -10,7 +10,7 @@ authors = [
 ]
 description = "EU_AI_ACT MCP (Model Context Protocol) server"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
   "mcp>=1.0.0",
   "python-dotenv>=1.0.0",
@@ -31,4 +31,4 @@ include = ["*"]
 
 
 [project.scripts]
-eu_ai_act_mcp = "EU_AI_ACT_MCP.__main__:main.py"
+eu_ai_act_mcp = "__main__:main.py"
