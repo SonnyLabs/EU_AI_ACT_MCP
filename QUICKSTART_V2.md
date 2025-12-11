@@ -50,7 +50,7 @@ Edit `claude_desktop_config.json`:
   "mcpServers": {
     "eu-ai-act-compliance": {
       "command": "/absolute/path/to/venv/bin/python",
-      "args": ["/absolute/path/to/server_v2.py"]
+      "args": ["/absolute/path/to/main.py"]
     }
   }
 }
@@ -65,7 +65,7 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
   "mcpServers": {
     "eu-ai-act-compliance": {
       "command": "/absolute/path/to/venv/bin/python",
-      "args": ["/absolute/path/to/server_v2.py"]
+      "args": ["/absolute/path/to/main.py"]
     }
   }
 }
@@ -266,11 +266,9 @@ print(result)
 
 If you need to go back to the original version:
 
-1. Update your MCP config to use `server.py` instead of `server_v2.py`
+1. Update `main.py` to use `server.py` instead of `server_v2.py`
 2. Restart your AI assistant
 3. Use the old tool names
-
-Both versions are maintained and work side-by-side.
 
 ## Support
 

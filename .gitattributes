@@ -1,16 +1,14 @@
-# Set default line ending to LF for cross-platform compatibility
-* text=lf eol=lf
+# Set default line ending behavior
+* text=auto eol=lf
 
-# Specific file types
+# Force LF for specific file types
 *.py text eol=lf
 *.md text eol=lf
 *.txt text eol=lf
 *.json text eol=lf
 *.yaml text eol=lf
 *.yml text eol=lf
-*.sh text eol=lf
-*.dockerignore text eol=lf
-*.gitignore text eol=lf
+*.toml text eol=lf
 
 # Binary files
 *.png binary

@@ -92,7 +92,39 @@ EU AI ACT MCP SERVER - PLUGIN SYSTEM TESTS
 ✓ Plugin system is ready for production!
 ```
 
-### 3. Configure Your AI Assistant
+### 3. Server Configuration Options
+
+The MCP server supports multiple connection modes:
+
+#### Default: STDIO Mode
+```bash
+python main.py
+```
+Used for local AI assistants (Claude Desktop, Windsurf) via stdio communication.
+
+#### HTTP Mode (for web applications)
+```bash
+python main.py --http
+```
+Server runs on `http://127.0.0.1:8001/mcp` by default.
+
+#### Custom HTTP Host/Port
+```bash
+python main.py --http --host 0.0.0.0 --port 8080
+```
+
+#### Command Line Options
+- `--stdio`: Run in stdio mode (default for AI assistants)
+- `--http`: Run in HTTP mode (default for web applications)
+- `--host HOST`: HTTP host (default: 127.0.0.1)
+- `--port PORT`: HTTP port (default: 8001)
+
+#### View Help
+```bash
+python main.py --help
+```
+
+### 4. Configure Your AI Assistant
 
 #### Claude Desktop
 
@@ -103,22 +135,25 @@ Edit `claude_desktop_config.json`:
   "mcpServers": {
     "eu-ai-act-compliance": {
       "command": "/path/to/venv/bin/python",
-      "args": ["/path/to/server_v2.py"]
+      "args": ["/path/to/main.py"]
     }
   }
 }
 ```
 
+**Important:** Use absolute paths, not relative paths! For HTTP mode, ensure the Python executable can access the main.py file.
+
 #### Windsurf
 
 Edit `~/.codeium/windsurf/mcp_config.json`:
 
+**STDIO Mode (default):**
 ```json
 {
   "mcpServers": {
     "eu-ai-act-compliance": {
       "command": "/path/to/venv/bin/python",
-      "args": ["/path/to/server_v2.py"],
+      "args": ["/path/to/main.py"],
       "env": {
         "SONNYLABS_API_TOKEN": "your_token",
         "SONNYLABS_ANALYSIS_ID": "your_id"
@@ -128,7 +163,23 @@ Edit `~/.codeium/windsurf/mcp_config.json`:
 }
 ```
 
-### 4. Test It Works
+**HTTP Mode (for web integration):**
+```json
+{
+  "mcpServers": {
+    "eu-ai-act-compliance": {
+      "command": "python",
+      "args": ["/path/to/main.py", "--http"],
+      "env": {
+        "SONNYLABS_API_TOKEN": "your_token",
+        "SONNYLABS_ANALYSIS_ID": "your_id"
+      }
+    }
+  }
+}
+```
+
+### 5. Test It Works
 
 Ask your AI assistant:
 
@@ -328,10 +379,8 @@ These work exactly the same as v1:
 
 ## 🔄 Migration from v1
 
-**Good news:** Both v1 and v2 are maintained!
-
-- **Keep using v1**: Use `server.py` - no changes needed
-- **Migrate to v2**: Use `server_v2.py` - see [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
+- **Keep using v1**: Modify `main.py` to use `server.py`  
+- **Migrate to v2**: Use `main.py` which uses `server_v2.py` - see [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)
 
 **Key changes:**
 - Add `content_type` parameter to watermarking/labeling tools
@@ -431,7 +480,7 @@ The plugin system makes contributions easy:
 
 1. **Install**: `pip install -r requirements.txt`
 2. **Test**: `python test_plugins.py`
-3. **Configure**: Add `server_v2.py` to your AI assistant
+3. **Configure**: Configure your AI assistant to use `main.py`
 4. **Use**: Ask your AI to use the consolidated tools!
 
 ### Compliance Checklist

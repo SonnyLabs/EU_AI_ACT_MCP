@@ -1,9 +1,11 @@
 ### Building and running your application
 
-When you're ready, start your application by running:
+This functionality requires a docker environment such as docker desktop (windows) or docker engine (linux). 
+
+When you're ready, start your mcp server by running:
 `docker compose up --build`.
 
-Your application will be available at http://localhost:8080.
+Your eu-ai-act mcp server will be available at http://localhost:8001/mcp. Update the configuration of your AI applications and agents to use this endpoint instead of the stdio path. 
 
 ### Deploying your application to the cloud
 

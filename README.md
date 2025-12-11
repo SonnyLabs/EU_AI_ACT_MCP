@@ -170,7 +170,7 @@ Edit the config file and add:
     "eu-ai-act-compliance": {
       "command": "FILE_PATH_OF_THIS_MCP/venv/bin/python",
       "args": [
-        "FILE_PATH_OF_THIS_MCP/server.py"
+        "FILE_PATH_OF_THIS_MCP/main.py"
       ],
       "env": {}
     }
