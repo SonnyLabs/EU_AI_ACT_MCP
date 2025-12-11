@@ -7,7 +7,7 @@ This is the entry point for the MCP server. It imports and runs the FastMCP serv
 
 # Import our MCP server instance
 import argparse
-from server import mcp
+from server_v2 import mcp
 import uvicorn
 from starlette.middleware.cors import CORSMiddleware
 

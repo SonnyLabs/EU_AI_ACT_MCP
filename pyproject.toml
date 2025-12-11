@@ -3,10 +3,10 @@ requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "EU_AI_ACT_MCP"
+name = "eu_ai_act_mcp"
 version = "0.1.0"
 authors = [
-  { name = "Liana" },
+  { name = "Sonnylabs"},
 ]
 description = "EU_AI_ACT_MCP (Model Context Protocol) server"
 readme = "README.md"
@@ -25,11 +25,7 @@ dev = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "."}
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["*"]
+py-modules = ["main", "server", "server_v2"]
 
 [project.scripts]
-eu_ai_act_mcp = "EU_AI_ACT_MCP.__main__:main.py"
+eu-ai-act-mcp = "main:main"

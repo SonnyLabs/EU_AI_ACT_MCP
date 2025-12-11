@@ -1,0 +1,2 @@
+[console_scripts]
+eu-ai-act-mcp = main:main
