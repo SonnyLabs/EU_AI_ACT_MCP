@@ -8,17 +8,16 @@ including transparency obligations for AI systems.
 
 import os
 import json
+import argparse
 from typing import Dict, Any, List
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from dotenv import load_dotenv
 
 # Load environment variables (if needed for future extensions)
 load_dotenv()
 
-# Create an MCP server with a name
+stateless_http = True
 mcp = FastMCP("EU_AI_ACT_MCP")
-
-
 # ============================================================================
 # RESOURCES - Data files that agents can read
 # ============================================================================
@@ -27,7 +26,6 @@ mcp = FastMCP("EU_AI_ACT_MCP")
 def get_disclosure_templates() -> str:
     """
     Provides pre-written disclosure text templates for EU AI Act Article 50 compliance.
-    
     Contains:
     - AI interaction disclosures (Article 50(1))
     - Emotion recognition disclosures (Article 50(3))
@@ -1734,3 +1732,4 @@ def check_sensitive_file_access(
             "is_sensitive": None,
             "recommendation": "System error - deny access and review logs"
         }
+
